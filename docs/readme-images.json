@@ -1,5 +1,5 @@
 {
-  "$comment": "Content of the README pictures. Cards: node sh1ft-w.github.io/theme/v1/readme-images/render.mjs <this repo> cards. The title image is NOT rendered from here: docs/images/readme-title.webp is a finished AI-generated image (free to use, metadata removed), used unchanged for light and dark. docs/images/stage-photo.jpg is its photo part for the website hero. docs/readme-title.html is a template to rebuild the title from the photo if needed.",
+  "$comment": "Content of the README pictures. Cards: node sh1ft-w.github.io/theme/v1/readme-images/render.mjs <this repo> cards. The title image is NOT rendered from here: docs/images/readme-title.webp is a finished AI-generated image (free to use, metadata removed), used unchanged for light and dark. The project page shows the same image in the hero. docs/images/stage-photo.jpg is its photo part for docs/readme-title.html, a template to rebuild the title from the photo if needed.",
   "title": {
     "name": "Chihiros",
     "eyebrow": "For Home Assistant",

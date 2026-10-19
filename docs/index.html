@@ -108,31 +108,9 @@ section.tint { background: var(--bg-2); }
 .pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-weight: 600; color: var(--ink-2); font-size: 13px; }
 .pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--aqua); display: inline-block; }
 
-/* Bühne: stilisiertes Becken mit Lampe und Karten (bleibt in beiden Themes dunkel) */
-.stage { position: relative; margin: clamp(48px, 7vw, 84px) auto 0; max-width: 1000px; border-radius: var(--radius-lg); padding: clamp(28px, 5vw, 56px) clamp(16px, 4vw, 48px);
-  background: radial-gradient(ellipse at 50% 0%, #3a1418, #140608 72%); box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.06); color: #eaf2f7; }
-.stage .photo { display: block; width: 100%; height: clamp(240px, 52vw, 560px); object-fit: cover; object-position: 50% 60%; border-radius: 20px; box-shadow: 0 30px 70px -28px rgba(230,0,18,0.35); }
-.cards { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-top: clamp(28px, 4vw, 40px); text-align: left; }
-.hc { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 20px 22px; min-width: 0; }
-.hc .top { display: flex; align-items: center; gap: 12px; }
-.hc .ico { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,77,87,0.18); color: #ff7a80; }
-.hc .ico svg { width: 20px; height: 20px; }
-.hc .name { font-weight: 600; font-size: 15px; }
-.hc .state { font-size: 13px; color: #9fb2bf; }
-.hc .power { margin-left: auto; width: 42px; height: 24px; border-radius: 999px; background: #e60012; position: relative; flex: none; }
-.hc .power::after { content: ""; position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; }
-.chs { display: grid; gap: 12px; margin-top: 18px; }
-.ch { display: grid; grid-template-columns: 54px 1fr 44px; align-items: center; gap: 12px; font: 500 13px/1 var(--mono); color: #9fb2bf; }
-.ch .track { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.1); position: relative; }
-.ch .track i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; }
-.ch b { font-weight: 500; text-align: right; color: #eaf2f7; }
-.rows { display: grid; gap: 0; margin-top: 4px; }
-.rows div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.07); font-size: 14px; }
-.rows div:first-child { border-top: 0; }
-.rows span { color: #9fb2bf; min-width: 0; }
-.rows b { font-weight: 500; text-align: right; color: #eaf2f7; overflow-wrap: anywhere; }
-.rows b.hot { color: #ff7a80; }
-.fict { margin-top: 16px; font-size: 12px; color: #7f939f; text-align: center; }
+/* Bühne: das README-Titelbild */
+.stage { position: relative; margin: clamp(48px, 7vw, 84px) auto 0; max-width: 1100px; }
+.stage .photo { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
 
 /* Bento: Gerade neu */
 .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
@@ -233,7 +211,7 @@ footer nav a { color: var(--ink-2); font-weight: 500; }
 footer .fine { flex-basis: 100%; line-height: 1.6; }
 
 @media (max-width: 960px) {
-  .split, .install, .cards { grid-template-columns: 1fr; }
+  .split, .install { grid-template-columns: 1fr; }
   .grid3 { grid-template-columns: 1fr 1fr; }
   .b.s4, .b.s8 { grid-column: span 6; }
 }
@@ -249,7 +227,6 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
   .repo { flex-wrap: wrap; padding: 12px 14px; gap: 10px; }
   .repo code { flex-basis: 100%; font-size: clamp(12px, 3.4vw, 14px); }
   .copy { margin-left: auto; }
-  .ch { grid-template-columns: 46px 1fr 40px; gap: 8px; }
   .prof-foot { grid-template-columns: 1fr 1fr; }
   .lane { grid-template-columns: 1fr; gap: 8px; text-align: left; }
   .lane .end.r { text-align: left; }
@@ -301,33 +278,8 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
       <span class="en">Home Assistant 2026.9 or newer &middot; English and German &middot; Apache 2.0</span><span class="de">Home Assistant 2026.9 oder neuer &middot; Deutsch und Englisch &middot; Apache 2.0</span>
     </p>
 
-    <div class="stage reveal d3" role="img" aria-label="AI-generated image of a planted aquarium with a Chihiros LED light and a dosing pump, below it a light card with channel sliders and a list of values. The values are made up.">
-      <img class="photo" src="images/stage-photo.jpg" width="1120" height="1000" alt="">
-      <div class="cards">
-        <div class="hc">
-          <div class="top">
-            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>
-            <div><div class="name">WRGB II Pro</div><div class="state"><span class="en">On &middot; manual</span><span class="de">An &middot; manuell</span></div></div>
-            <span class="power" aria-hidden="true"></span>
-          </div>
-          <div class="chs">
-            <div class="ch"><span><span class="en">Red</span><span class="de">Rot</span></span><span class="track"><i style="width:60%;background:#e8665a"></i></span><b>60 %</b></div>
-            <div class="ch"><span><span class="en">Green</span><span class="de">Grün</span></span><span class="track"><i style="width:45%;background:#38b277"></i></span><b>45 %</b></div>
-            <div class="ch"><span><span class="en">Blue</span><span class="de">Blau</span></span><span class="track"><i style="width:70%;background:#3c8ce0"></i></span><b>70 %</b></div>
-            <div class="ch"><span><span class="en">White</span><span class="de">Weiß</span></span><span class="track"><i style="width:90%;background:#e6eef3"></i></span><b>90 %</b></div>
-          </div>
-        </div>
-        <div class="hc">
-          <div class="rows">
-            <div><span><span class="en">Auto mode</span><span class="de">Auto-Modus</span></span><b class="hot"><span class="en">Daily schedule</span><span class="de">Tagesablauf</span></b></div>
-            <div><span><span class="en">Pump 1 today</span><span class="de">Pumpe 1 heute</span></span><b>3.0 ml</b></div>
-            <div><span><span class="en">Pump 1 lasts</span><span class="de">Pumpe 1 reicht noch</span></span><b><span class="en">41 days</span><span class="de">41 Tage</span></b></div>
-            <div><span><span class="en">Sun cycle</span><span class="de">Sonnenverlauf</span></span><b>08:00 &ndash; 19:58</b></div>
-            <div><span><span class="en">Reachable</span><span class="de">Erreichbar</span></span><b><span class="en">connected</span><span class="de">verbunden</span></b></div>
-          </div>
-        </div>
-      </div>
-      <p class="fict"><span class="en">AI-generated image; the values in the cards are made up.</span><span class="de">KI-generiertes Bild; die Werte in den Karten sind erfunden.</span></p>
+    <div class="stage reveal d3">
+      <img class="photo" src="images/readme-title.webp" width="2000" height="1000" alt="Chihiros for Home Assistant: Your aquarium light, fully local. An AI-generated image of a planted aquarium with a Chihiros LED light, a four-channel dosing pump with bottles and a controller on a sideboard.">
     </div>
   </div>
 </section>

@@ -59,5 +59,6 @@ Projektseite (`docs/index.html`) lesen die manifest.json selbst.
 - Testdaten sind fiktiv (MACs wie `C0:FF:EE:12:34:56`, `AA:BB:CC:00:11:22`).
 - README-Bilder: Karten aus `docs/readme-images.json`, gerendert mit `theme/v1/readme-images/render.mjs <repo> cards`
   aus sh1ft-w.github.io. Titelbild: `docs/images/readme-title.webp` (fertiges KI-Bild, frei verwendbar, ohne
-  Metadaten, unverändert für hell und dunkel); `docs/images/stage-photo.jpg` ist sein Fotoausschnitt für die
-  Projektseite. `docs/readme-title.html` ist nur eine Vorlage, falls der Titel einmal neu gebaut werden soll.
+  Metadaten, unverändert für hell und dunkel); die Projektseite zeigt dasselbe Bild im Hero.
+  `docs/images/stage-photo.jpg` ist sein Fotoausschnitt für `docs/readme-title.html`, nur eine Vorlage, falls der
+  Titel einmal neu gebaut werden soll.
