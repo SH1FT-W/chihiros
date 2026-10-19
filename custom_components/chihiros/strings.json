@@ -1,0 +1,488 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "confirm": {
+        "description": "Set up {name}?",
+        "data": {
+          "pump_count": "Number of pump channels",
+          "device_type": "Connected lamp"
+        }
+      },
+      "user": {
+        "title": "Choose a Chihiros device",
+        "data": {
+          "address": "Device",
+          "pump_count": "Number of pump channels (dosing pump only)",
+          "device_type": "Connected lamp (Commander 1 only)"
+        }
+      },
+      "reconfigure": {
+        "description": "Change the number of pump channels of {name}. Entities of channels that are no longer used are removed.",
+        "data": {
+          "pump_count": "Number of pump channels"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This device is already set up.",
+      "no_devices_found": "No supported Chihiros device in Bluetooth range.",
+      "not_supported": "This Chihiros device is not supported (LED lamps and dosing pump only).",
+      "reconfigure_successful": "Settings saved.",
+      "nothing_to_reconfigure": "This lamp has nothing to reconfigure."
+    }
+  },
+  "entity": {
+    "light": {
+      "light": {
+        "state_attributes": {
+          "auto_mode": {
+            "name": "Auto mode"
+          },
+          "channels": {
+            "name": "Channels"
+          }
+        }
+      }
+    },
+    "switch": {
+      "auto_mode": {
+        "name": "Auto mode"
+      },
+      "sun_on": {
+        "name": "Sun cycle"
+      },
+      "acclim_on": {
+        "name": "Acclimatization"
+      },
+      "dosing_delay": {
+        "name": "Dosing delay"
+      },
+      "pump_active": {
+        "name": "Pump {pump} active"
+      },
+      "pump_compensate": {
+        "name": "Pump {pump} catch up missed doses"
+      }
+    },
+    "number": {
+      "red": {
+        "name": "Red"
+      },
+      "green": {
+        "name": "Green"
+      },
+      "blue": {
+        "name": "Blue"
+      },
+      "dose_volume": {
+        "name": "Pump {pump} dose volume"
+      },
+      "feed_minutes": {
+        "name": "Feeding light duration"
+      },
+      "sun_ramp": {
+        "name": "Sun cycle ramp"
+      },
+      "acclim_start": {
+        "name": "Acclimatization start brightness"
+      },
+      "acclim_weeks": {
+        "name": "Acclimatization duration"
+      },
+      "capacity": {
+        "name": "Pump {pump} container size"
+      },
+      "white": {
+        "name": "White"
+      },
+      "warm": {
+        "name": "Warm white"
+      }
+    },
+    "button": {
+      "dose": {
+        "name": "Dose pump {pump}"
+      },
+      "feed": {
+        "name": "Feeding light"
+      },
+      "refill": {
+        "name": "Pump {pump} container refilled"
+      }
+    },
+    "binary_sensor": {
+      "reachable": {
+        "name": "Reachable"
+      }
+    },
+    "sensor": {
+      "firmware_version": {
+        "name": "Firmware"
+      },
+      "signal": {
+        "name": "Signal strength"
+      },
+      "last_contact": {
+        "name": "Last contact"
+      },
+      "schedule_points": {
+        "name": "Daily schedule"
+      },
+      "device_today": {
+        "name": "Pump {pump} today"
+      },
+      "device_total": {
+        "name": "Pump {pump} total"
+      },
+      "ha_today": {
+        "name": "Pump {pump} today via HA"
+      },
+      "ha_total": {
+        "name": "Pump {pump} total via HA"
+      },
+      "ha_cycles": {
+        "name": "Pump {pump} doses via HA"
+      },
+      "last_calibration": {
+        "name": "Pump {pump} last calibrated"
+      },
+      "feeding_until": {
+        "name": "Feeding light until"
+      },
+      "remaining": {
+        "name": "Pump {pump} remaining"
+      },
+      "days_left": {
+        "name": "Pump {pump} lasts"
+      },
+      "plan": {
+        "name": "Pump {pump} program",
+        "state": {
+          "none": "No program",
+          "daily": "Daily",
+          "once": "Once",
+          "timer": "Timer",
+          "spread": "Spread"
+        }
+      },
+      "fan_rpm": {
+        "name": "Fan speed"
+      },
+      "fan_temperature_celsius": {
+        "name": "Temperature"
+      }
+    },
+    "time": {
+      "sun_earliest": {
+        "name": "Sun cycle earliest on"
+      },
+      "sun_latest": {
+        "name": "Sun cycle latest off"
+      }
+    },
+    "select": {
+      "scene": {
+        "name": "Scene",
+        "state": {
+          "red": "Red (red plants)",
+          "green": "Green",
+          "buce": "Buce (Bucephalandra)",
+          "fish": "Fish",
+          "shrimp": "Shrimp",
+          "all": "All",
+          "schedule": "Daily schedule"
+        }
+      }
+    },
+    "fan": {
+      "fan": {
+        "name": "Fan",
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "auto": "Automatic (temperature)",
+              "manual": "Manual"
+            }
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unreachable": {
+      "message": "{name} unreachable: {error}"
+    },
+    "bad_points": {
+      "message": "Invalid schedule: 2 to {max} points, each time only once."
+    },
+    "bad_pump": {
+      "message": "This pump only has {count} channels."
+    },
+    "no_doser": {
+      "message": "The selected device is not a Chihiros dosing pump."
+    },
+    "bad_weekday_schedule": {
+      "message": "Invalid weekday schedules: each weekday once, sunset after sunrise, at most 7."
+    },
+    "bad_plan": {
+      "message": "Invalid dosing program: {error}"
+    },
+    "spread_fields": {
+      "message": "Spread needs start, duration, count and daily_ml."
+    },
+    "no_device": {
+      "message": "The selected device is not a Chihiros device."
+    },
+    "no_capacity": {
+      "message": "Set the container size of pump {pump} first."
+    },
+    "unknown_channel": {
+      "message": "This lamp has no channel {channel}. Available: {channels}."
+    },
+    "lite_every_day": {
+      "message": "This controller has no weekday selection: use one setting for every day."
+    }
+  },
+  "services": {
+    "set_channels": {
+      "name": "Set channels",
+      "description": "Set the lamp's channels directly in percent, like the sliders in the app. Channels not given stay.",
+      "fields": {
+        "red": {
+          "name": "Red",
+          "description": "%"
+        },
+        "green": {
+          "name": "Green",
+          "description": "%"
+        },
+        "blue": {
+          "name": "Blue",
+          "description": "%"
+        },
+        "transition": {
+          "name": "Transition",
+          "description": "Duration in seconds."
+        },
+        "white": {
+          "name": "White",
+          "description": "%"
+        },
+        "warm": {
+          "name": "Warm white",
+          "description": "%"
+        }
+      }
+    },
+    "set_auto_curve": {
+      "name": "Set daily schedule",
+      "description": "Writes the daily schedule (auto mode) to the lamp: points with time and all channels in %. The lamp fades between them itself and runs without Home Assistant.",
+      "fields": {
+        "points": {
+          "name": "Points",
+          "description": "List of time (HH:MM), red, green, blue, white, warm (0–100, as the lamp has them). 2 to 16 points."
+        },
+        "activate": {
+          "name": "Switch to auto",
+          "description": "Start the schedule right away."
+        }
+      }
+    },
+    "dose": {
+      "name": "Dose",
+      "description": "Doses an amount once on a channel.",
+      "fields": {
+        "device_id": {
+          "name": "Dosing pump",
+          "description": "The pump device."
+        },
+        "pump": {
+          "name": "Channel",
+          "description": "Pump channel 1–8."
+        },
+        "ml": {
+          "name": "Amount",
+          "description": "In ml; empty = configured dose volume."
+        }
+      }
+    },
+    "calibrate_pump": {
+      "name": "Calibrate pump",
+      "description": "First start a test run with seconds and collect the liquid, then enter the measured amount.",
+      "fields": {
+        "device_id": {
+          "name": "Dosing pump",
+          "description": "The pump device."
+        },
+        "pump": {
+          "name": "Channel",
+          "description": "Pump channel 1–8."
+        },
+        "seconds": {
+          "name": "Seconds",
+          "description": "Test run duration."
+        },
+        "measured_ml": {
+          "name": "Measured amount",
+          "description": "Collected amount in ml."
+        }
+      }
+    },
+    "set_dosing_program": {
+      "name": "Set dosing program",
+      "description": "Daily program: the amount at every time. The pump doses by itself.",
+      "fields": {
+        "device_id": {
+          "name": "Dosing pump",
+          "description": "The pump device."
+        },
+        "pump": {
+          "name": "Channel",
+          "description": "Pump channel 1–8."
+        },
+        "times": {
+          "name": "Times",
+          "description": "List of HH:MM."
+        },
+        "ml": {
+          "name": "Amount per time",
+          "description": "ml"
+        },
+        "mode": {
+          "name": "Type",
+          "description": "daily, once, timer or spread (pump splits the daily amount over a window)."
+        },
+        "weekdays": {
+          "name": "Weekdays",
+          "description": "mon … sun; empty = every day."
+        },
+        "doses": {
+          "name": "Doses",
+          "description": "List of time (HH:MM) and ml."
+        },
+        "start": {
+          "name": "Start (spread)",
+          "description": "Window start."
+        },
+        "duration": {
+          "name": "Duration (spread)",
+          "description": "Window length in minutes."
+        },
+        "count": {
+          "name": "Number of doses (spread)",
+          "description": "How many doses the daily amount is split into."
+        },
+        "daily_ml": {
+          "name": "Daily amount (spread)",
+          "description": "ml per day."
+        }
+      }
+    },
+    "clear_dosing_program": {
+      "name": "Clear dosing program",
+      "description": "Clears a channel's program.",
+      "fields": {
+        "device_id": {
+          "name": "Dosing pump",
+          "description": "The pump device."
+        },
+        "pump": {
+          "name": "Channel",
+          "description": "Pump channel 1–8."
+        }
+      }
+    },
+    "reset_pump_totals": {
+      "name": "Reset counters",
+      "description": "Resets a channel's lifetime counter in the pump.",
+      "fields": {
+        "device_id": {
+          "name": "Dosing pump",
+          "description": "The pump device."
+        },
+        "pump": {
+          "name": "Channel",
+          "description": "Pump channel 1–8."
+        }
+      }
+    },
+    "set_weekday_schedule": {
+      "name": "Weekday schedules",
+      "description": "Like the app: up to 7 settings with sunrise, sunset, ramp and weekdays. Each weekday once. Replaces a point schedule and switches auto on.",
+      "fields": {
+        "settings": {
+          "name": "Settings",
+          "description": "List of weekdays (mon…sun, empty = all), sunrise, sunset (HH:MM), ramp (minutes), red, green, blue, white, warm (0–100)."
+        }
+      }
+    },
+    "send_raw": {
+      "name": "Send raw commands (diagnostics)",
+      "description": "Sends commands verbatim to the device and returns its notifications. For troubleshooting only.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Light or pump."
+        },
+        "frames": {
+          "name": "Commands",
+          "description": "List of commands with cmd, mode and params (bytes 0–255)."
+        },
+        "wait": {
+          "name": "Wait",
+          "description": "Seconds to wait for notifications."
+        }
+      }
+    },
+    "set_container_remaining": {
+      "name": "Set container level",
+      "description": "Sets how much is in the container right now (e.g. only partly filled). Counting continues from here.",
+      "fields": {
+        "device_id": {
+          "name": "Dosing pump",
+          "description": "The pump device."
+        },
+        "pump": {
+          "name": "Channel",
+          "description": "Pump channel 1–8."
+        },
+        "ml": {
+          "name": "Amount",
+          "description": "Current content in ml (at most the container size)."
+        }
+      }
+    }
+  },
+  "issues": {
+    "container_low": {
+      "title": "{name}: container of pump {pump} almost empty",
+      "description": "About {ml} ml left in the container of pump {pump} (about {days} days). After refilling press \"Pump {pump} container refilled\" and this notice disappears."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Notifications",
+        "description": "Push message when a container falls below the threshold – once per pump, again only after refilling. Leave the service empty to switch it off.",
+        "data": {
+          "notify_service": "Notification service",
+          "notify_percent": "Notify below"
+        },
+        "data_description": {
+          "notify_service": "e.g. the Companion app of your phone (notify.mobile_app_…).",
+          "notify_percent": "Share of the container size."
+        }
+      }
+    }
+  },
+  "selector": {
+    "device_type": {
+      "options": {
+        "white": "White (1 channel)",
+        "rgb": "RGB (3 channels)",
+        "wrgb": "WRGB (4 channels)"
+      }
+    }
+  }
+}

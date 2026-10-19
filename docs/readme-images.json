@@ -1,0 +1,203 @@
+{
+  "$comment": "Content of the README pictures. Cards: node sh1ft-w.github.io/theme/v1/readme-images/render.mjs <this repo> cards. The title image is NOT rendered from here: docs/images/readme-title.webp is a finished AI-generated image (free to use, metadata removed), used unchanged for light and dark. docs/images/stage-photo.jpg is its photo part for the website hero. docs/readme-title.html is a template to rebuild the title from the photo if needed.",
+  "title": {
+    "name": "Chihiros",
+    "eyebrow": "For Home Assistant",
+    "lead": "Your Chihiros lamps, <em>steady over Bluetooth.</em>",
+    "sub": "Chihiros LED lamps and the dosing pump in Home Assistant: every channel as a slider, daily schedules written to the lamp, dosing that is never repeated. No app, no cloud.",
+    "pills": [
+      [
+        "Local Bluetooth"
+      ],
+      [
+        "Platinum",
+        "v"
+      ],
+      [
+        "HACS"
+      ]
+    ],
+    "logo": "docs/images/readme-icon.png",
+    "shot": {
+      "light": "docs/images/stage-photo.jpg",
+      "dark": "docs/images/stage-photo.jpg",
+      "srcW": 1120,
+      "winW": 1120,
+      "s": 0.64,
+      "strips": [
+        [
+          0,
+          1000
+        ]
+      ],
+      "bar": null,
+      "left": 560,
+      "top": 0,
+      "flat": true
+    }
+  },
+  "colors": {
+    "light": {
+      "bg": "#FAF5F4",
+      "bg2": "#F2E8E6",
+      "ink": "#1E1012",
+      "ink2": "#5E4B4D",
+      "ink3": "#927F81",
+      "accentText": "#B8000E",
+      "accent": "#E60012",
+      "accent2": "#FF4D57",
+      "glow1": "rgba(230,0,18,0.12)",
+      "glow2": "rgba(120,0,10,0.08)",
+      "frame": "rgba(50,5,10,0.10)",
+      "pillBg": "#ffffff",
+      "pillLine": "rgba(50,5,10,0.08)",
+      "win": "#1a0406",
+      "bar": ""
+    },
+    "dark": {
+      "bg": "#140809",
+      "bg2": "#1D0D0F",
+      "ink": "#F7ECEC",
+      "ink2": "rgba(240,220,222,0.84)",
+      "ink3": "rgba(240,220,222,0.52)",
+      "accentText": "#FF7A80",
+      "accent": "#FF4D57",
+      "accent2": "#E60012",
+      "glow1": "rgba(255,77,87,0.18)",
+      "glow2": "rgba(140,0,12,0.16)",
+      "frame": "rgba(255,255,255,0.10)",
+      "pillBg": "rgba(255,255,255,0.06)",
+      "pillLine": "rgba(255,255,255,0.10)",
+      "win": "#1a0406",
+      "bar": ""
+    }
+  },
+  "fonts": {
+    "display": "\"Archivo\", -apple-system, system-ui, sans-serif",
+    "body": "\"Inter\", -apple-system, system-ui, sans-serif",
+    "mono": "\"JetBrains Mono\", ui-monospace, Menlo, monospace",
+    "google": "https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+  },
+  "cards": {
+    "new": [
+      {
+        "icon": "lightbulb-group-outline",
+        "title": "All 0x5A lamps",
+        "ver": "26.10.3",
+        "text": "A II, WRGB II, Pro and Slim, VIVID III, Universal WRGB, SEA_LED, Terrarium Egg, Z Light TINY and Commander 1, 4 and X, detected by their Bluetooth name."
+      },
+      {
+        "icon": "palette-outline",
+        "title": "1 to 4 channels",
+        "ver": "26.10.3",
+        "text": "Brightness, RGB or RGBW, as the lamp has them. Sliders, set_channels and schedules follow the channels of each model."
+      },
+      {
+        "icon": "fan",
+        "title": "VIVID III fan",
+        "ver": "26.10.3",
+        "text": "Fan speed or automatic by temperature, plus fan speed and temperature sensors."
+      },
+      {
+        "icon": "calendar-outline",
+        "title": "Calendar versions",
+        "ver": "26.10.1",
+        "text": "Year, month and the release of that month: 26.10.3 is the third release of October 2026."
+      }
+    ],
+    "features": [
+      {
+        "icon": "tune-vertical",
+        "title": "Every channel a slider",
+        "text": "Red, green, blue, white or warm white from 0 to 100 %, like in the app, plus the service set_channels."
+      },
+      {
+        "icon": "lightbulb-on-outline",
+        "title": "A light with transitions",
+        "text": "Brightness keeps the mix, transition fades in gentle steps, switching on brings back the last mix instead of 100 % white."
+      },
+      {
+        "icon": "calendar-clock",
+        "title": "Schedules in the lamp",
+        "text": "Daily curves and weekday schedules are written to the lamp, which then runs them by itself, even without Home Assistant."
+      },
+      {
+        "icon": "weather-sunset",
+        "title": "Sun, feeding, acclimatization",
+        "text": "A schedule after the real sun, a feeding light button and a dimmed start for new tanks."
+      },
+      {
+        "icon": "eyedropper",
+        "title": "Dosing pump",
+        "text": "Dose, calibrate and program 1 to 8 channels. Counters from the pump, container level and a push when it runs low."
+      },
+      {
+        "icon": "shield-check-outline",
+        "title": "Never doses twice",
+        "text": "A dose is never repeated automatically: rather an error message than a double dose."
+      },
+      {
+        "icon": "rocket-launch-outline",
+        "title": "Never blocks the start",
+        "text": "First contact runs in the background after Home Assistant has started."
+      },
+      {
+        "icon": "bluetooth-connect",
+        "title": "Kind to Bluetooth proxies",
+        "text": "One connection at a time, a hard time limit and disconnect after 15 seconds idle, so other devices get their slot."
+      }
+    ],
+    "entities": [
+      {
+        "icon": "lightbulb-outline",
+        "title": "Light",
+        "text": "One light per lamp: brightness, RGB or RGBW with transition. Attribute channels shows every channel in %."
+      },
+      {
+        "icon": "tune-variant",
+        "title": "Channel numbers",
+        "text": "red, green, blue, white or warm per model, plus feeding light duration, sun ramp and acclimatization."
+      },
+      {
+        "icon": "toggle-switch-outline",
+        "title": "Switches and select",
+        "text": "auto_mode, sun cycle and acclimatization, scene (RGB lamps), sun earliest and latest as times."
+      },
+      {
+        "icon": "fan",
+        "title": "Fan (VIVID III)",
+        "text": "fan with speed and automatic mode, fan_rpm and fan_temperature_celsius."
+      },
+      {
+        "icon": "eyedropper",
+        "title": "Dosing pump",
+        "text": "Per channel: dose button and volume, today, total, remaining, lasts, program, active and catch up switches."
+      },
+      {
+        "icon": "stethoscope",
+        "title": "Diagnostics",
+        "text": "reachable with the last error, signal strength, last contact, firmware and a diagnostics download."
+      }
+    ],
+    "how": {
+      "cols": 3,
+      "items": [
+        {
+          "icon": "bluetooth",
+          "title": "One connection",
+          "text": "Over Home Assistant's Bluetooth or ESPHome proxies, a lock per device, disconnected after 15 seconds idle."
+        },
+        {
+          "icon": "swap-horizontal",
+          "title": "The app's frames",
+          "text": "Channel levels, modes, schedule points and dosing commands, exactly as the My Chihiros app sends them."
+        },
+        {
+          "icon": "history",
+          "title": "Remembers what you set",
+          "text": "The lamp does not report its colour. Home Assistant keeps the last state and restores it after a power cut."
+        }
+      ]
+    }
+  }
+}

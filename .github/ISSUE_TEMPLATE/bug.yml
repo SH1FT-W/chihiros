@@ -1,0 +1,76 @@
+name: Bug report
+description: Something in Chihiros does not work as described, or a lamp model behaves differently.
+labels: ["bug"]
+body:
+  - type: input
+    id: ha_version
+    attributes:
+      label: Home Assistant version
+      placeholder: "2026.10.1"
+    validations:
+      required: true
+  - type: input
+    id: chihiros_version
+    attributes:
+      label: Chihiros version
+      description: Settings > Devices & services > Chihiros, or HACS.
+      placeholder: "26.10.3"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Device model
+      description: As sold, for example C II RGB 60, WRGB II Pro 90, Commander 4, dosing pump 4 channels.
+      placeholder: "WRGB II Pro 90"
+    validations:
+      required: true
+  - type: input
+    id: bluetooth_name
+    attributes:
+      label: Bluetooth name
+      description: The name the device advertises (the title of the integration entry, for example DYWPRO90 followed by letters and digits). The first letters are enough, the rest is the device address.
+      placeholder: "DYWPRO90..."
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware
+      description: Sensor "Firmware" or the device page in Home Assistant.
+      placeholder: "23"
+  - type: input
+    id: bluetooth
+    attributes:
+      label: Bluetooth connection
+      description: Local adapter or ESPHome Bluetooth proxy (with ESPHome version), and how many other Bluetooth devices use it.
+      placeholder: "ESPHome proxy 2026.9, 2 other devices"
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happens instead
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Settings > Devices & services > Chihiros > three dots > Download diagnostics. The file contains no Bluetooth address. Drag it here.
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else
+      description: Debug log lines (logger custom_components.chihiros set to debug), whether the My Chihiros app was open at the same time.

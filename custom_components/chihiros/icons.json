@@ -1,0 +1,161 @@
+{
+  "entity": {
+    "switch": {
+      "auto_mode": {
+        "default": "mdi:calendar-clock"
+      },
+      "sun_on": {
+        "default": "mdi:weather-sunset"
+      },
+      "acclim_on": {
+        "default": "mdi:chart-line-variant"
+      },
+      "dosing_delay": {
+        "default": "mdi:timer-sand"
+      },
+      "pump_active": {
+        "default": "mdi:pump"
+      },
+      "pump_compensate": {
+        "default": "mdi:restore"
+      }
+    },
+    "number": {
+      "red": {
+        "default": "mdi:alpha-r-circle"
+      },
+      "green": {
+        "default": "mdi:alpha-g-circle"
+      },
+      "blue": {
+        "default": "mdi:alpha-b-circle"
+      },
+      "dose_volume": {
+        "default": "mdi:water"
+      },
+      "feed_minutes": {
+        "default": "mdi:fish"
+      },
+      "sun_ramp": {
+        "default": "mdi:weather-sunset-up"
+      },
+      "acclim_start": {
+        "default": "mdi:brightness-5"
+      },
+      "acclim_weeks": {
+        "default": "mdi:calendar-range"
+      },
+      "capacity": {
+        "default": "mdi:bottle-tonic"
+      },
+      "white": {
+        "default": "mdi:alpha-w-circle"
+      },
+      "warm": {
+        "default": "mdi:white-balance-incandescent"
+      }
+    },
+    "button": {
+      "dose": {
+        "default": "mdi:water-plus"
+      },
+      "feed": {
+        "default": "mdi:fish"
+      },
+      "refill": {
+        "default": "mdi:cup-water"
+      }
+    },
+    "sensor": {
+      "firmware_version": {
+        "default": "mdi:chip"
+      },
+      "last_contact": {
+        "default": "mdi:bluetooth-connect"
+      },
+      "schedule_points": {
+        "default": "mdi:chart-timeline-variant"
+      },
+      "device_today": {
+        "default": "mdi:water-check"
+      },
+      "device_total": {
+        "default": "mdi:water-percent"
+      },
+      "ha_today": {
+        "default": "mdi:water-check-outline"
+      },
+      "ha_total": {
+        "default": "mdi:water-outline"
+      },
+      "ha_cycles": {
+        "default": "mdi:counter"
+      },
+      "last_calibration": {
+        "default": "mdi:scale-balance"
+      },
+      "feeding_until": {
+        "default": "mdi:fish"
+      },
+      "remaining": {
+        "default": "mdi:bottle-tonic-outline"
+      },
+      "days_left": {
+        "default": "mdi:calendar-clock"
+      },
+      "plan": {
+        "default": "mdi:calendar-check"
+      },
+      "fan_rpm": {
+        "default": "mdi:fan"
+      }
+    },
+    "time": {
+      "sun_earliest": {
+        "default": "mdi:weather-sunset-up"
+      },
+      "sun_latest": {
+        "default": "mdi:weather-sunset-down"
+      }
+    },
+    "select": {
+      "scene": {
+        "default": "mdi:palette"
+      }
+    },
+    "fan": {
+      "fan": {
+        "default": "mdi:fan"
+      }
+    }
+  },
+  "services": {
+    "set_channels": {
+      "service": "mdi:tune-vertical"
+    },
+    "set_auto_curve": {
+      "service": "mdi:chart-timeline-variant"
+    },
+    "dose": {
+      "service": "mdi:water-plus"
+    },
+    "calibrate_pump": {
+      "service": "mdi:scale-balance"
+    },
+    "set_dosing_program": {
+      "service": "mdi:calendar-clock"
+    },
+    "clear_dosing_program": {
+      "service": "mdi:calendar-remove"
+    },
+    "reset_pump_totals": {
+      "service": "mdi:counter"
+    },
+    "set_weekday_schedule": {
+      "service": "mdi:calendar-week"
+    },
+    "send_raw": {
+      "service": "mdi:console"
+    }
+  }
+}

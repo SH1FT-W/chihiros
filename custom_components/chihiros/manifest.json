@@ -1,0 +1,191 @@
+{
+  "domain": "chihiros",
+  "name": "Chihiros",
+  "bluetooth": [
+    {
+      "local_name": "DYNCRGP*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNCRGB*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYDOSE*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNA2*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNA2N*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWRGB*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNT90*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNW30*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNW45*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNW60*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNW90*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNW12P*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNWRGB*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWPRO30*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWPRO45*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWPRO60*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWPRO80*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWPRO90*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYWPR120*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSILN*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSL30*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSL45*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSL60*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSL90*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSL120*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSL12*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYVVD3*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU550*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU600*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU700*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU800*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU920*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU1000*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU1200*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYU1500*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSEA*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYDD*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYSSD*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYZSD*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYCOM*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYLED*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYNLED*",
+      "connectable": true
+    },
+    {
+      "local_name": "DYONE*",
+      "connectable": true
+    }
+  ],
+  "codeowners": [
+    "@SH1FT-W"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "bluetooth_adapters"
+  ],
+  "documentation": "https://github.com/SH1FT-W/chihiros",
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/SH1FT-W/chihiros/issues",
+  "requirements": [],
+  "version": "26.10.3"
+}

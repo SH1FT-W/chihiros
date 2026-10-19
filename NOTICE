@@ -1,0 +1,57 @@
+Chihiros for Home Assistant
+Copyright 2026 SH1FT-W
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Acknowledgements
+----------------
+
+This integration is a rewrite. It succeeds the custom component
+TheMicDiet/chihiros-led-control (https://github.com/TheMicDiet/chihiros-led-control,
+MIT License, Copyright (c) 2023 michael) and keeps its domain (chihiros) and its
+unique IDs, so existing installations can switch over. Do not install both at the
+same time.
+
+The following parts are based on that project's documentation and model registry
+(no source files were copied; the code was written anew):
+
+- the Bluetooth protocol description (docs/protocol.md: frame layout, checksum,
+  LED, dosing pump and fan commands, notifications), which that project derived
+  from the "My Chihiros" app 2.8.59 and Bluetooth captures,
+- the model table in custom_components/chihiros/models.py (Bluetooth name
+  prefixes, channel layouts, SeaLed/BleLed curve encoding, Lite controllers
+  without weekday selection, Commander 1 layout choice),
+- the WRGB VIVID III fan commands and status notification.
+
+Its license:
+
+  MIT License
+
+  Copyright (c) 2023 michael
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+The Chihiros logo in custom_components/chihiros/brand/ and assets/ is used only
+to identify the supported devices.
+
+Trademarks
+----------
+
+Chihiros is a trademark of its owner. This project is independent and is not
+affiliated with, endorsed by or sponsored by Chihiros.

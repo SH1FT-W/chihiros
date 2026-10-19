@@ -1,0 +1,488 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "confirm": {
+        "description": "{name} einrichten?",
+        "data": {
+          "pump_count": "Anzahl Pumpenkanäle",
+          "device_type": "Angeschlossene Lampe"
+        }
+      },
+      "user": {
+        "title": "Chihiros-Gerät wählen",
+        "data": {
+          "address": "Gerät",
+          "pump_count": "Anzahl Pumpenkanäle (nur Dosierpumpe)",
+          "device_type": "Angeschlossene Lampe (nur Commander 1)"
+        }
+      },
+      "reconfigure": {
+        "description": "Anzahl der Pumpenkanäle von {name} ändern. Entitäten nicht mehr genutzter Kanäle werden entfernt.",
+        "data": {
+          "pump_count": "Anzahl Pumpenkanäle"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist schon eingerichtet.",
+      "no_devices_found": "Kein unterstütztes Chihiros-Gerät in Bluetooth-Reichweite.",
+      "not_supported": "Dieses Chihiros-Gerät wird nicht unterstützt (nur LED-Lampen und Dosierpumpe).",
+      "reconfigure_successful": "Einstellungen gespeichert.",
+      "nothing_to_reconfigure": "Bei dieser Lampe gibt es nichts neu zu konfigurieren."
+    }
+  },
+  "entity": {
+    "light": {
+      "light": {
+        "state_attributes": {
+          "auto_mode": {
+            "name": "Auto-Modus"
+          },
+          "channels": {
+            "name": "Kanäle"
+          }
+        }
+      }
+    },
+    "switch": {
+      "auto_mode": {
+        "name": "Auto-Modus"
+      },
+      "sun_on": {
+        "name": "Sonnenverlauf"
+      },
+      "acclim_on": {
+        "name": "Eingewöhnung"
+      },
+      "dosing_delay": {
+        "name": "Dosierverzögerung"
+      },
+      "pump_active": {
+        "name": "Pumpe {pump} aktiv"
+      },
+      "pump_compensate": {
+        "name": "Pumpe {pump} verpasste Dosen nachholen"
+      }
+    },
+    "number": {
+      "red": {
+        "name": "Rot"
+      },
+      "green": {
+        "name": "Grün"
+      },
+      "blue": {
+        "name": "Blau"
+      },
+      "dose_volume": {
+        "name": "Pumpe {pump} Dosiermenge"
+      },
+      "feed_minutes": {
+        "name": "Fütterungslicht Dauer"
+      },
+      "sun_ramp": {
+        "name": "Sonnenverlauf Übergang"
+      },
+      "acclim_start": {
+        "name": "Eingewöhnung Start-Helligkeit"
+      },
+      "acclim_weeks": {
+        "name": "Eingewöhnung Dauer"
+      },
+      "capacity": {
+        "name": "Pumpe {pump} Behältergröße"
+      },
+      "white": {
+        "name": "Weiß"
+      },
+      "warm": {
+        "name": "Warmweiß"
+      }
+    },
+    "button": {
+      "dose": {
+        "name": "Pumpe {pump} dosieren"
+      },
+      "feed": {
+        "name": "Fütterungslicht"
+      },
+      "refill": {
+        "name": "Pumpe {pump} Behälter aufgefüllt"
+      }
+    },
+    "binary_sensor": {
+      "reachable": {
+        "name": "Erreichbar"
+      }
+    },
+    "sensor": {
+      "firmware_version": {
+        "name": "Firmware"
+      },
+      "signal": {
+        "name": "Signalstärke"
+      },
+      "last_contact": {
+        "name": "Letzter Kontakt"
+      },
+      "schedule_points": {
+        "name": "Tagesablauf"
+      },
+      "device_today": {
+        "name": "Pumpe {pump} heute"
+      },
+      "device_total": {
+        "name": "Pumpe {pump} gesamt"
+      },
+      "ha_today": {
+        "name": "Pumpe {pump} heute per HA"
+      },
+      "ha_total": {
+        "name": "Pumpe {pump} gesamt per HA"
+      },
+      "ha_cycles": {
+        "name": "Pumpe {pump} Dosierungen per HA"
+      },
+      "last_calibration": {
+        "name": "Pumpe {pump} zuletzt kalibriert"
+      },
+      "feeding_until": {
+        "name": "Fütterungslicht bis"
+      },
+      "remaining": {
+        "name": "Pumpe {pump} Restmenge"
+      },
+      "days_left": {
+        "name": "Pumpe {pump} reicht noch"
+      },
+      "plan": {
+        "name": "Pumpe {pump} Plan",
+        "state": {
+          "none": "Kein Plan",
+          "daily": "Täglich",
+          "once": "Einmalig",
+          "timer": "Timer",
+          "spread": "Frei verteilt"
+        }
+      },
+      "fan_rpm": {
+        "name": "Lüfterdrehzahl"
+      },
+      "fan_temperature_celsius": {
+        "name": "Temperatur"
+      }
+    },
+    "time": {
+      "sun_earliest": {
+        "name": "Sonnenverlauf frühestens hell"
+      },
+      "sun_latest": {
+        "name": "Sonnenverlauf spätestens dunkel"
+      }
+    },
+    "select": {
+      "scene": {
+        "name": "Szene",
+        "state": {
+          "red": "Rot (rote Pflanzen)",
+          "green": "Grün",
+          "buce": "Buce (Bucephalandra)",
+          "fish": "Fisch",
+          "shrimp": "Garnelen",
+          "all": "Alle",
+          "schedule": "Tagesablauf"
+        }
+      }
+    },
+    "fan": {
+      "fan": {
+        "name": "Lüfter",
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "auto": "Automatisch (Temperatur)",
+              "manual": "Manuell"
+            }
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unreachable": {
+      "message": "{name} nicht erreichbar: {error}"
+    },
+    "bad_points": {
+      "message": "Ungültiger Tagesablauf: 2 bis {max} Stützpunkte, jede Uhrzeit nur einmal."
+    },
+    "bad_pump": {
+      "message": "Diese Pumpe hat nur {count} Kanäle."
+    },
+    "no_doser": {
+      "message": "Das gewählte Gerät ist keine Chihiros-Dosierpumpe."
+    },
+    "bad_weekday_schedule": {
+      "message": "Ungültige Tagesabläufe: jeder Wochentag nur einmal, Sonnenuntergang nach Sonnenaufgang, höchstens 7."
+    },
+    "bad_plan": {
+      "message": "Ungültiger Dosierplan: {error}"
+    },
+    "spread_fields": {
+      "message": "Für „frei verteilt“ braucht es start, duration, count und daily_ml."
+    },
+    "no_device": {
+      "message": "Das gewählte Gerät ist kein Chihiros-Gerät."
+    },
+    "no_capacity": {
+      "message": "Erst die Behältergröße von Pumpe {pump} eintragen."
+    },
+    "unknown_channel": {
+      "message": "Diese Lampe hat keinen Kanal {channel}. Vorhanden: {channels}."
+    },
+    "lite_every_day": {
+      "message": "Dieser Controller kennt keine Wochentage: eine Einstellung für alle Tage verwenden."
+    }
+  },
+  "services": {
+    "set_channels": {
+      "name": "Kanäle setzen",
+      "description": "Kanäle der Lampe direkt in %, wie die Regler in der App. Nicht angegebene Kanäle bleiben.",
+      "fields": {
+        "red": {
+          "name": "Rot",
+          "description": "%"
+        },
+        "green": {
+          "name": "Grün",
+          "description": "%"
+        },
+        "blue": {
+          "name": "Blau",
+          "description": "%"
+        },
+        "transition": {
+          "name": "Übergang",
+          "description": "Dauer in Sekunden."
+        },
+        "white": {
+          "name": "Weiß",
+          "description": "%"
+        },
+        "warm": {
+          "name": "Warmweiß",
+          "description": "%"
+        }
+      }
+    },
+    "set_auto_curve": {
+      "name": "Tagesablauf setzen",
+      "description": "Schreibt den Tagesablauf (Auto-Modus) in die Lampe: Stützpunkte mit Uhrzeit und allen Kanälen in %. Die Lampe blendet dazwischen selbst über und läuft auch ohne Home Assistant.",
+      "fields": {
+        "points": {
+          "name": "Stützpunkte",
+          "description": "Liste mit time (HH:MM), red, green, blue, white, warm (0–100, je nach Lampe). 2 bis 16 Punkte."
+        },
+        "activate": {
+          "name": "Auto einschalten",
+          "description": "Danach gleich den Tagesablauf abspielen."
+        }
+      }
+    },
+    "dose": {
+      "name": "Dosieren",
+      "description": "Gibt einmal eine Menge auf einem Kanal ab.",
+      "fields": {
+        "device_id": {
+          "name": "Dosierpumpe",
+          "description": "Das Gerät der Pumpe."
+        },
+        "pump": {
+          "name": "Kanal",
+          "description": "Pumpenkanal 1–8."
+        },
+        "ml": {
+          "name": "Menge",
+          "description": "In ml; leer = eingestellte Dosiermenge."
+        }
+      }
+    },
+    "calibrate_pump": {
+      "name": "Pumpe kalibrieren",
+      "description": "Erst mit „Sekunden“ einen Testlauf starten und die Menge auffangen, dann die gemessene Menge eintragen.",
+      "fields": {
+        "device_id": {
+          "name": "Dosierpumpe",
+          "description": "Das Gerät der Pumpe."
+        },
+        "pump": {
+          "name": "Kanal",
+          "description": "Pumpenkanal 1–8."
+        },
+        "seconds": {
+          "name": "Sekunden",
+          "description": "Dauer des Testlaufs."
+        },
+        "measured_ml": {
+          "name": "Gemessene Menge",
+          "description": "Aufgefangene Menge in ml."
+        }
+      }
+    },
+    "set_dosing_program": {
+      "name": "Dosierplan setzen",
+      "description": "Täglicher Plan: zu jeder Uhrzeit die Menge. Die Pumpe dosiert dann selbst.",
+      "fields": {
+        "device_id": {
+          "name": "Dosierpumpe",
+          "description": "Das Gerät der Pumpe."
+        },
+        "pump": {
+          "name": "Kanal",
+          "description": "Pumpenkanal 1–8."
+        },
+        "times": {
+          "name": "Uhrzeiten",
+          "description": "Liste mit HH:MM."
+        },
+        "ml": {
+          "name": "Menge je Uhrzeit",
+          "description": "ml"
+        },
+        "mode": {
+          "name": "Art",
+          "description": "daily = täglich zu festen Uhrzeiten, once = einmalig, timer = Timer, spread = Pumpe verteilt die Tagesmenge selbst über ein Zeitfenster."
+        },
+        "weekdays": {
+          "name": "Wochentage",
+          "description": "mon … sun; leer = jeden Tag."
+        },
+        "doses": {
+          "name": "Gaben",
+          "description": "Liste mit time (HH:MM) und ml – je Uhrzeit eine eigene Menge."
+        },
+        "start": {
+          "name": "Start (frei)",
+          "description": "Beginn des Zeitfensters."
+        },
+        "duration": {
+          "name": "Dauer (frei)",
+          "description": "Länge des Zeitfensters in Minuten."
+        },
+        "count": {
+          "name": "Anzahl Gaben (frei)",
+          "description": "In wie viele Gaben die Pumpe die Tagesmenge teilt."
+        },
+        "daily_ml": {
+          "name": "Tagesmenge (frei)",
+          "description": "ml pro Tag."
+        }
+      }
+    },
+    "clear_dosing_program": {
+      "name": "Dosierplan löschen",
+      "description": "Löscht den Plan eines Kanals.",
+      "fields": {
+        "device_id": {
+          "name": "Dosierpumpe",
+          "description": "Das Gerät der Pumpe."
+        },
+        "pump": {
+          "name": "Kanal",
+          "description": "Pumpenkanal 1–8."
+        }
+      }
+    },
+    "reset_pump_totals": {
+      "name": "Zähler zurücksetzen",
+      "description": "Setzt den Gesamtzähler eines Kanals in der Pumpe zurück.",
+      "fields": {
+        "device_id": {
+          "name": "Dosierpumpe",
+          "description": "Das Gerät der Pumpe."
+        },
+        "pump": {
+          "name": "Kanal",
+          "description": "Pumpenkanal 1–8."
+        }
+      }
+    },
+    "set_weekday_schedule": {
+      "name": "Tagesabläufe je Wochentag",
+      "description": "Wie die App: bis zu 7 Einstellungen mit Sonnenaufgang, Sonnenuntergang, Übergang und Wochentagen. Jeder Wochentag nur einmal. Ersetzt einen per Stützpunkten geschriebenen Ablauf und schaltet Auto ein.",
+      "fields": {
+        "settings": {
+          "name": "Einstellungen",
+          "description": "Liste mit weekdays (mon…sun, leer = alle), sunrise, sunset (HH:MM), ramp (Minuten), red, green, blue, white, warm (0–100)."
+        }
+      }
+    },
+    "send_raw": {
+      "name": "Rohbefehle senden (Diagnose)",
+      "description": "Schickt Befehle unverändert an das Gerät und gibt die Rückmeldungen zurück. Nur zur Fehlersuche.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Lampe oder Pumpe."
+        },
+        "frames": {
+          "name": "Befehle",
+          "description": "Liste von Befehlen mit cmd, mode und params (Bytes 0–255)."
+        },
+        "wait": {
+          "name": "Warten",
+          "description": "Sekunden auf Rückmeldungen warten."
+        }
+      }
+    },
+    "set_container_remaining": {
+      "name": "Restmenge setzen",
+      "description": "Legt fest, wie viel gerade im Behälter ist (z. B. nur teilweise gefüllt). Ab hier wird weitergezählt.",
+      "fields": {
+        "device_id": {
+          "name": "Dosierpumpe",
+          "description": "Das Gerät der Pumpe."
+        },
+        "pump": {
+          "name": "Kanal",
+          "description": "Pumpenkanal 1–8."
+        },
+        "ml": {
+          "name": "Menge",
+          "description": "Aktueller Inhalt in ml (höchstens die Behältergröße)."
+        }
+      }
+    }
+  },
+  "issues": {
+    "container_low": {
+      "title": "{name}: Behälter von Pumpe {pump} fast leer",
+      "description": "Im Behälter von Pumpe {pump} sind noch etwa {ml} ml (reicht noch ca. {days} Tage). Nach dem Auffüllen den Knopf „Pumpe {pump} Behälter aufgefüllt“ drücken – dann verschwindet dieser Hinweis."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Benachrichtigungen",
+        "description": "Push-Nachricht, wenn ein Behälter unter die Schwelle fällt – einmal je Pumpe, erneut erst nach dem Auffüllen. Dienst leer lassen = aus.",
+        "data": {
+          "notify_service": "Benachrichtigungsdienst",
+          "notify_percent": "Benachrichtigen unter"
+        },
+        "data_description": {
+          "notify_service": "z. B. die Companion-App deines Handys (notify.mobile_app_…).",
+          "notify_percent": "Anteil der Behältergröße."
+        }
+      }
+    }
+  },
+  "selector": {
+    "device_type": {
+      "options": {
+        "white": "Weiß (1 Kanal)",
+        "rgb": "RGB (3 Kanäle)",
+        "wrgb": "WRGB (4 Kanäle)"
+      }
+    }
+  }
+}

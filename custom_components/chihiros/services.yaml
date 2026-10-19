@@ -1,0 +1,170 @@
+set_channels:
+  target:
+    entity:
+      integration: chihiros
+      domain: light
+  fields:
+    red:
+      selector:
+        number: {min: 0, max: 100, step: 1, unit_of_measurement: "%", mode: slider}
+    green:
+      selector:
+        number: {min: 0, max: 100, step: 1, unit_of_measurement: "%", mode: slider}
+    blue:
+      selector:
+        number: {min: 0, max: 100, step: 1, unit_of_measurement: "%", mode: slider}
+    white:
+      selector:
+        number: {min: 0, max: 100, step: 1, unit_of_measurement: "%", mode: slider}
+    warm:
+      selector:
+        number: {min: 0, max: 100, step: 1, unit_of_measurement: "%", mode: slider}
+    transition:
+      selector:
+        number: {min: 0, max: 21600, step: 1, unit_of_measurement: s, mode: box}
+
+set_auto_curve:
+  target:
+    entity:
+      integration: chihiros
+      domain: light
+  fields:
+    points:
+      required: true
+      example: >-
+        [{"time": "09:00", "red": 0, "green": 0, "blue": 0},
+        {"time": "10:00", "red": 70, "green": 70, "blue": 70},
+        {"time": "19:00", "red": 70, "green": 70, "blue": 70},
+        {"time": "19:30", "red": 0, "green": 0, "blue": 0}]
+      selector:
+        object:
+    activate:
+      default: true
+      selector:
+        boolean:
+
+dose:
+  fields:
+    device_id: &doser
+      required: true
+      selector:
+        device:
+          integration: chihiros
+    pump: &pump
+      required: true
+      selector:
+        number: {min: 1, max: 8, step: 1, mode: box}
+    ml:
+      selector:
+        number: {min: 0.2, max: 999.9, step: 0.1, unit_of_measurement: ml, mode: box}
+
+calibrate_pump:
+  fields:
+    device_id: *doser
+    pump: *pump
+    seconds:
+      selector:
+        number: {min: 1, max: 254, step: 1, unit_of_measurement: s, mode: box}
+    measured_ml:
+      selector:
+        number: {min: 0.1, max: 255, step: 0.01, unit_of_measurement: ml, mode: box}
+
+set_dosing_program:
+  fields:
+    device_id: *doser
+    pump: *pump
+    mode:
+      default: daily
+      selector:
+        select:
+          options: [daily, once, timer, spread]
+    weekdays:
+      example: '["mon", "wed", "fri"]'
+      selector:
+        select:
+          multiple: true
+          options: [mon, tue, wed, thu, fri, sat, sun]
+    times:
+      example: '["08:00", "20:00"]'
+      selector:
+        object:
+    ml:
+      selector:
+        number: {min: 0.1, max: 999.9, step: 0.1, unit_of_measurement: ml, mode: box}
+    doses:
+      example: '[{"time": "08:00", "ml": 1.0}, {"time": "20:00", "ml": 2.0}]'
+      selector:
+        object:
+    start:
+      selector:
+        time:
+    duration:
+      selector:
+        number: {min: 1, max: 1439, step: 1, unit_of_measurement: min, mode: box}
+    count:
+      selector:
+        number: {min: 1, max: 255, step: 1, mode: box}
+    daily_ml:
+      selector:
+        number: {min: 0.1, max: 6553, step: 0.1, unit_of_measurement: ml, mode: box}
+
+clear_dosing_program:
+  fields:
+    device_id: *doser
+    pump: *pump
+
+reset_pump_totals:
+  fields:
+    device_id: *doser
+    pump: *pump
+
+set_container_remaining:
+  fields:
+    device_id: *doser
+    pump: *pump
+    ml:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 5000
+          step: 1
+          unit_of_measurement: ml
+          mode: box
+
+set_weekday_schedule:
+  target:
+    entity:
+      integration: chihiros
+      domain: light
+  fields:
+    settings:
+      required: true
+      example: >-
+        [{"weekdays": ["mon","tue","wed","thu","fri"], "sunrise": "09:00", "sunset": "19:00", "ramp": 60,
+        "red": 70, "green": 70, "blue": 70},
+        {"weekdays": ["sat","sun"], "sunrise": "08:00", "sunset": "21:00", "ramp": 60,
+        "red": 70, "green": 70, "blue": 70}]
+      selector:
+        object:
+
+send_raw:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: chihiros
+    frames:
+      required: true
+      example: '[{"cmd": 90, "mode": 4, "params": [1]}]'
+      selector:
+        object:
+    wait:
+      default: 2
+      selector:
+        number:
+          min: 0.2
+          max: 10
+          step: 0.1
+          unit_of_measurement: s

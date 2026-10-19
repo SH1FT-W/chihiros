@@ -1,0 +1,79 @@
+name: Prüfung
+
+# Vorlage aus repo-vorlagen/vorlagen/ci-ha-integration.yml. Je Repo anpassen:
+#   96  (Abdeckungsgrenze, knapp unter dem Stand)
+#   Bluetooth-Repos: zusätzliche Pakete in requirements_test.txt
+# Lokal dasselbe: siehe CLAUDE.md des Repos.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "17 5 * * 1"   # montags: fängt Brüche durch neue HA-Versionen
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pruefung-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Integration (ruff, mypy, pytest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: requirements_test.txt
+      - name: Installieren
+        run: |
+          uv venv --python 3.14
+          uv pip install -r requirements_test.txt pytest-cov
+      - name: Lint
+        run: uvx ruff@0.16.9 check . && uvx ruff@0.16.9 format --check .
+      - name: Typen
+        run: uvx mypy@2.3.1 --python-executable .venv/bin/python
+      - name: Übersetzungen vollständig
+        run: .venv/bin/python tools/pruefe-uebersetzungen.py
+      - name: Tests
+        run: .venv/bin/python -m pytest -q -p no:logging --cov=custom_components --cov-report=term --cov-fail-under=96
+
+  hassfest:
+    name: Hassfest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: home-assistant/actions/hassfest@06749dd8c0b54f350bc69c8752456cee498808a3 # master 2026-09-30
+
+  ha-neueste:
+    # Frühwarnung: Tests gegen die neueste pytest-homeassistant-custom-component (zieht die aktuelle HA mit).
+    # Darf rot sein, blockiert nichts.
+    name: Tests gegen neueste HA (Frühwarnung)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - name: Installieren (neueste)
+        run: |
+          uv venv --python 3.14
+          sed -E 's/==.*//' requirements_test.txt > /tmp/req-neu.txt
+          uv pip install --prerelease=allow -r /tmp/req-neu.txt
+      - name: Tests
+        run: .venv/bin/python -m pytest -q -p no:logging

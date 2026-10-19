@@ -1,0 +1,126 @@
+# Integration Quality Scale, selbst geprüft, nicht offiziell (keine Core-Integration).
+# Regeln: https://developers.home-assistant.io/docs/core/integration-quality-scale/rules
+rules:
+  # Bronze
+  action-setup:
+    status: done
+    comment: Alle Aktionen in async_setup, Entitätsdienste über async_register_platform_entity_service.
+  appropriate-polling:
+    status: done
+    comment: Entitäten pollen nicht; Pumpe alle 30 Min., Lampe einmal pro Stunde (Erreichbarkeit + Uhrzeit).
+  brands:
+    status: done
+    comment: Eigenes Logo in brand/.
+  common-modules:
+    status: done
+    comment: Gerätelogik in coordinator.py, Bluetooth in ble.py, gemeinsame Basis in entity.py.
+  config-flow-test-coverage: done
+  config-flow:
+    status: done
+    comment: Bluetooth-Erkennung und Auswahl aus den gesehenen Geräten.
+  dependency-transparency:
+    status: done
+    comment: Keine eigenen requirements; bleak/bleak-retry-connector kommen über HAs Bluetooth.
+  docs-actions: done
+  docs-triggers:
+    status: exempt
+    comment: Keine eigenen Auslöser.
+  docs-conditions:
+    status: exempt
+    comment: Keine eigenen Bedingungen.
+  docs-high-level-description: done
+  docs-installation-instructions: done
+  docs-removal-instructions: done
+  entity-event-setup:
+    status: done
+    comment: Listener in async_added_to_hass, Abmelden über async_on_remove.
+  entity-unique-id:
+    status: done
+    comment: <MAC>_<key> wie beim Original.
+  has-entity-name: done
+  runtime-data: done
+  test-before-configure:
+    status: exempt
+    comment: >-
+      Bluetooth-Gerät ohne Zugangsdaten; angeboten werden nur Geräte, die gerade werben. Eine Testverbindung im
+      Flow würde einen Proxy-Platz belegen, den die laufenden Geräte brauchen.
+  test-before-setup:
+    status: exempt
+    comment: >-
+      Bewusst kein Bluetooth beim Start (das Original blockierte damit HA). Erreichbarkeit kommt aus den
+      Werbepaketen, erster Kontakt 90 s später im Hintergrund.
+  unique-config-entry:
+    status: done
+    comment: Eindeutig über die Bluetooth-Adresse.
+
+  # Silver
+  action-exceptions:
+    status: done
+    comment: Bluetooth-Fehler und ungültige Eingaben als übersetzte HomeAssistantError.
+  config-entry-unloading: done
+  docs-configuration-parameters:
+    status: exempt
+    comment: Kein Options-Flow.
+  docs-installation-parameters: done
+  entity-unavailable:
+    status: done
+    comment: Nicht verfügbar, sobald kein Proxy das Gerät mehr sieht (async_track_unavailable).
+  integration-owner: done
+  log-when-unavailable:
+    status: done
+    comment: Wegfall und Rückkehr je einmal mit INFO geloggt (note), sonst nur DEBUG.
+  parallel-updates: done
+  reauthentication-flow:
+    status: exempt
+    comment: Keine Zugangsdaten.
+  test-coverage: done
+
+  # Gold
+  devices: done
+  diagnostics:
+    status: done
+    comment: Ohne Bluetooth-Adresse und Titel (enthält die Adresse).
+  discovery-update-info:
+    status: exempt
+    comment: Die Bluetooth-Adresse ist die Kennung des Geräts; es gibt nichts, das sich ändern könnte.
+  discovery:
+    status: done
+    comment: Bluetooth-Matcher (local_name) im Manifest.
+  docs-data-update: done
+  docs-examples: done
+  docs-known-limitations: done
+  docs-supported-devices: done
+  docs-supported-functions: done
+  docs-troubleshooting: done
+  docs-use-cases: done
+  dynamic-devices:
+    status: exempt
+    comment: Ein Gerät pro Eintrag; neue Geräte kommen über die Bluetooth-Erkennung als eigener Eintrag.
+  entity-category: done
+  entity-device-class: done
+  entity-disabled-by-default:
+    status: done
+    comment: Signalstärke ist standardmäßig aus.
+  entity-translations: done
+  exception-translations: done
+  icon-translations: done
+  reconfiguration-flow:
+    status: done
+    comment: Pumpenzahl der Dosierpumpe; bei der Lampe gibt es nichts einzustellen.
+  repair-issues:
+    status: done
+    comment: Hinweis „Behälter fast leer“ je Pumpenkanal.
+  stale-devices:
+    status: exempt
+    comment: >-
+      Ein Gerät pro Eintrag, Löschen des Eintrags entfernt es. Entitäten wegfallender Pumpenkanäle entfernt das
+      Neu-Konfigurieren.
+
+  # Platinum
+  async-dependency:
+    status: done
+    comment: Nur HAs asynchrones Bluetooth (bleak, bleak-retry-connector).
+  inject-websession:
+    status: exempt
+    comment: Keine HTTP-Verbindungen.
+  strict-typing: done
