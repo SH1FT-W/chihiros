@@ -38,13 +38,15 @@ def test_message_ids_skip_reserved():
     assert ids.next() == (0, 1)
 
 
-def test_reserved_byte_avoided_in_led_but_not_in_curve():
+def test_parameters_and_checksum_verbatim_only_message_id_avoids_reserved():
     frame = p.set_channel(ids_at(0, 1), 0, 90)
-    assert frame[7] == 0x59  # 90 = 0x5A wird zu 0x59
+    assert frame[7] == 0x5A  # 90 % bleiben 90 % (wie die App)
     point = p.curve_point(ids_at(0, 1), 0, 9 * 60, 90)
-    assert point[-2] == 0x5A  # Kurvenpunkte unverändert (wie die App)
+    assert point[-2] == 0x5A
     for n in range(300):
-        assert p.set_channel(ids_at(0, n % 255), n % 3, n % 101)[-1] != 0x5A
+        frame = p.set_channel(ids_at(0, n % 255), n % 3, n % 101)
+        assert 0x5A not in frame[3:5], "Nachrichten-ID meidet 0x5A"
+        assert frame[-1] == p.checksum(frame[:-1]), "Prüfsumme unverändert"
 
 
 def test_set_time_and_prelude():

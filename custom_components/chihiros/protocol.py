@@ -4,8 +4,8 @@ Quelle: Protokoll-Doku von TheMicDiet/chihiros-led-control (aus „My Chihiros�
 Play-Store-Version – per Dart-Analyse und Bluetooth-Mitschnitten gewonnen).
 
 Rahmen: [Befehl, 0x01, Länge(=Parameter+5), Nachricht-ID hi, lo, Modus, Parameter…, Prüfsumme]
-Prüfsumme = XOR über Byte 1 bis vorletztes. Ältere LED-Befehle meiden das Byte 0x5A (in ID, Parametern
-und Prüfsumme); Dosier- und Kurvenbefehle schicken ihre Parameter unverändert.
+Prüfsumme = XOR über Byte 1 bis vorletztes. Nur die Nachrichten-ID meidet das Byte 0x5A; Parameter und Prüfsumme
+gehen unverändert raus, wie in der App (laut Original v0.19.0 am APK geprüft – 90 % bleiben 90 %).
 """
 
 from __future__ import annotations
@@ -46,17 +46,13 @@ def checksum(frame: bytes | bytearray) -> int:
     return value
 
 
-def encode(ids: MessageIds, cmd: int, mode: int, params: Sequence[int], *, avoid_reserved: bool = True) -> bytes:
+def encode(ids: MessageIds, cmd: int, mode: int, params: Sequence[int]) -> bytes:
     """Einen Befehl als Rahmen bauen."""
     if any(not 0 <= p <= 255 for p in params):
         raise ValueError(f"Parameter außerhalb 0–255: {list(params)}")
-    payload = [RESERVED - 1 if avoid_reserved and p == RESERVED else p for p in params]
-    while True:
-        hi, lo = ids.next()
-        frame = bytes([cmd, 1, len(payload) + 5, hi, lo, mode, *payload])
-        check = checksum(frame)
-        if not (avoid_reserved and check == RESERVED):
-            return frame + bytes([check])
+    hi, lo = ids.next()
+    frame = bytes([cmd, 1, len(params) + 5, hi, lo, mode, *params])
+    return frame + bytes([checksum(frame)])
 
 
 # --- Gemeinsam -------------------------------------------------------------------------------------
@@ -111,9 +107,9 @@ def curve_point(ids: MessageIds, channel: int, minutes: int, level: int, *, sea_
     level = max(0, min(100, int(level)))
     if sea_led:
         hour, minute = divmod(minutes, 60)
-        return encode(ids, 0x5A, 0x06, [channel, hour, minute, level], avoid_reserved=False)
+        return encode(ids, 0x5A, 0x06, [channel, hour, minute, level])
     slot, rest = divmod(minutes, 30)
-    return encode(ids, 0x5A, 0x06, [channel, slot + (rest > 14), level], avoid_reserved=False)
+    return encode(ids, 0x5A, 0x06, [channel, slot + (rest > 14), level])
 
 
 # --- Lüfter (WRGB VIVID III) ----------------------------------------------------------------------
@@ -151,7 +147,7 @@ def dosing_auth(ids: MessageIds) -> list[bytes]:
 def dose(ids: MessageIds, pump: int, ml: float) -> bytes:
     if not DOSE_MIN_ML <= ml <= DOSE_MAX_ML:
         raise ValueError(f"Dosis muss zwischen {DOSE_MIN_ML} und {DOSE_MAX_ML} ml liegen")
-    return encode(ids, 0xA5, 27, [pump, 0, 0, *_volume(ml)], avoid_reserved=False)
+    return encode(ids, 0xA5, 27, [pump, 0, 0, *_volume(ml)])
 
 
 def calibrate(ids: MessageIds, pump: int, seconds: int | None, measured_ml: float | None) -> bytes:
@@ -165,15 +161,15 @@ def calibrate(ids: MessageIds, pump: int, seconds: int | None, measured_ml: floa
         if not 0 <= whole <= 255:
             raise ValueError("Messwert außerhalb 0–255 ml")
         vol = [whole, (rest + 5) // 10]
-    return encode(ids, 0xA5, 22, [pump, time_byte, *vol], avoid_reserved=False)
+    return encode(ids, 0xA5, 22, [pump, time_byte, *vol])
 
 
 def reset_totals(ids: MessageIds, pump: int) -> bytes:
-    return encode(ids, 0xA5, 5, [pump + 21, 255, 255], avoid_reserved=False)
+    return encode(ids, 0xA5, 5, [pump + 21, 255, 255])
 
 
 def reset_program(ids: MessageIds, pump: int) -> bytes:
-    return encode(ids, 0xA5, 5, [pump + 25, 255, 255], avoid_reserved=False)
+    return encode(ids, 0xA5, 5, [pump + 25, 255, 255])
 
 
 # Wochentage als Bitmaske (Montag = 64 … Sonntag = 1, jeden Tag = 127)
@@ -189,18 +185,18 @@ def weekday_mask(days: Sequence[str] | None) -> int:
 
 def channel_state(ids: MessageIds, pump: int, *, active: bool, compensate: bool) -> bytes:
     """Kanal aktiv/pausiert und „verpasste Dosen nachholen“ (App: Unterbrechungs-Ausgleich)."""
-    return encode(ids, 0xA5, 32, [pump, 1 if compensate else 0, 1 if active else 0], avoid_reserved=False)
+    return encode(ids, 0xA5, 32, [pump, 1 if compensate else 0, 1 if active else 0])
 
 
 def dosing_delay(ids: MessageIds, on: bool) -> bytes:
     """Geräteeinstellung Dosierverzögerung."""
-    return encode(ids, 0xA5, 31, [1 if on else 0], avoid_reserved=False)
+    return encode(ids, 0xA5, 31, [1 if on else 0])
 
 
 def dosing_set(ids: MessageIds, pump: int, daily_ml: float | None, weekdays: int) -> bytes:
     """Tagesmenge + Wochentage eines Kanals (App: dosingSet, „erste Einstellung des Tages“)."""
     vol = [255, 255] if daily_ml is None else _volume(daily_ml)
-    return encode(ids, 0xA5, 27, [pump, weekdays, 1, 0, *vol], avoid_reserved=False)
+    return encode(ids, 0xA5, 27, [pump, weekdays, 1, 0, *vol])
 
 
 PLAN_ONCE, PLAN_DAILY, PLAN_SPREAD, PLAN_TIMER = 0, 1, 2, 3
@@ -213,10 +209,10 @@ def _batched(ids: MessageIds, mode: int, header: list[int], records: Sequence[li
     for record in records:
         acc += record
         if len(acc) > _BATCH_LIMIT:
-            frames.append(encode(ids, 0xA5, mode, acc, avoid_reserved=False))
+            frames.append(encode(ids, 0xA5, mode, acc))
             acc = list(header)
     if acc != header:
-        frames.append(encode(ids, 0xA5, mode, acc, avoid_reserved=False))
+        frames.append(encode(ids, 0xA5, mode, acc))
     return frames
 
 
@@ -254,7 +250,7 @@ def plan(
     records = [[t // 60, t % 60, *_volume(ml)] for t, ml in sorted(doses)]
     if kind == PLAN_TIMER:
         return frames + _batched(ids, 21, [pump, PLAN_TIMER], records)
-    return frames + [encode(ids, 0xA5, 21, [pump, kind, *r], avoid_reserved=False) for r in records]
+    return frames + [encode(ids, 0xA5, 21, [pump, kind, *r]) for r in records]
 
 
 def program(ids: MessageIds, pump: int, times: Sequence[int], ml_each: float) -> list[bytes]:

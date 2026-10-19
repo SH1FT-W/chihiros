@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant
 import pytest
 
 from custom_components.chihiros import ble
-from custom_components.chihiros.const import UART_RX_CHAR, UART_TX_CHAR
+from custom_components.chihiros.const import CUSTOM_NOTIFY_CHAR, HM10_RX_CHAR, UART_RX_CHAR, UART_TX_CHAR
 
 
 def make_client(write_uuid: str = UART_RX_CHAR, notify: bool = True):
@@ -64,6 +64,23 @@ async def test_connect_prelude_and_idle_disconnect(hass: HomeAssistant, link):
         await asyncio.sleep(0.05)
         await hass.async_block_till_done()
         client.disconnect.assert_awaited()
+
+
+@pytest.mark.parametrize(("props", "expected"), [(["write", "notify"], "write"), (["write"], "custom")])
+async def test_hm10_notifications_on_write_char_first(hass: HomeAssistant, link, props, expected):
+    """HM-10: Rückmeldungen auf FFE1 selbst, 8EC90003 nur als Ersatz, wenn FFE1 nicht melden kann."""
+    lk, _ = link
+    client = make_client(HM10_RX_CHAR)
+    write = client.services.get_characteristic(HM10_RX_CHAR)
+    write.properties = props
+    custom = MagicMock()
+    plain = client.services.get_characteristic.side_effect
+    client.services.get_characteristic.side_effect = lambda uuid: (
+        custom if uuid.lower() == CUSTOM_NOTIFY_CHAR.lower() else plain(uuid)
+    )
+    with patch.object(ble, "establish_connection", AsyncMock(return_value=client)):
+        await lk.send([b"x"], wait=0)
+    assert client.start_notify.call_args.args[0] is (write if expected == "write" else custom)
 
 
 async def test_retry_then_fail(hass: HomeAssistant, link):

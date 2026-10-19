@@ -1,5 +1,10 @@
 # Changelog
 
+## 26.10.4 – 19.10.2026
+
+- **Exact brightness:** channel values are sent unchanged, like the official app. Before, 90 % was sent as 89 % because the byte 0x5A was wrongly treated as reserved (only the message ID avoids it). Found in the protocol fixes of the original integration (v0.19.0).
+- **Status messages on older lamps:** lamps with the HM-10 module now receive notifications on the same characteristic the app uses (FFE1). The previous characteristic is only used when FFE1 cannot notify, so nothing changes for lamps that already worked.
+
 ## 26.10.3 – 19.10.2026
 
 - **All Chihiros LED lamps of the 0x5A family:** besides the C II RGB, the integration now supports A II, WRGB II

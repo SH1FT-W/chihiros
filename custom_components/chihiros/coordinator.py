@@ -201,7 +201,7 @@ class ChihirosDevice:
         """Diagnose: Rohbefehle (Befehl, Modus, Parameter) senden und die Rückmeldungen danach zurückgeben."""
         since = dt_util.utcnow()
         ids = self.link.ids
-        encoded = [protocol.encode(ids, cmd, mode, params, avoid_reserved=False) for cmd, mode, params in frames]
+        encoded = [protocol.encode(ids, cmd, mode, params) for cmd, mode, params in frames]
         await self.command(encoded, wait=wait)
         return {
             "sent": [f.hex() for f in encoded],

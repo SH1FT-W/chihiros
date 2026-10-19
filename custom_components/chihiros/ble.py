@@ -151,7 +151,13 @@ class ChihirosLink:
         if write.uuid.lower() == UART_RX_CHAR.lower():
             notify = services.get_characteristic(UART_TX_CHAR)
         else:
-            notify = services.get_characteristic(CUSTOM_NOTIFY_CHAR) or services.get_characteristic(UART_TX_CHAR)
+            # HM-10: die App bekommt Rückmeldungen auf FFE1 selbst (8EC90003 ist laut Original v0.19.0 nur fürs
+            # Firmware-Update); der alte Weg bleibt Ersatz für Geräte, deren FFE1 nicht melden kann
+            notify = (
+                write
+                if "notify" in write.properties
+                else services.get_characteristic(CUSTOM_NOTIFY_CHAR) or services.get_characteristic(UART_TX_CHAR)
+            )
         self._client, self._write_char = client, write
         self.connects += 1
         first = protocol.prelude(self.ids, dt_util.now())
