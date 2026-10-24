@@ -57,8 +57,8 @@ Projektseite (`docs/index.html`) lesen die manifest.json selbst.
   Pakete der CI in `requirements_test.txt` (HA 2026.9.3 + Bluetooth-Pakete). `.github/workflows/hacs.yml`: HACS-Validierung.
 - `tools/next-version` und `tools/pruefe-uebersetzungen.py` sind byteidentische Kopien der Vorlagen.
 - Testdaten sind fiktiv (MACs wie `C0:FF:EE:12:34:56`, `AA:BB:CC:00:11:22`).
-- README-Bilder: Karten aus `docs/readme-images.json`, gerendert mit `theme/v1/readme-images/render.mjs <repo> cards`
-  aus sh1ft-w.github.io. Titelbild: `docs/images/readme-title.webp` (fertiges KI-Bild, frei verwendbar, ohne
-  Metadaten, unverändert für hell und dunkel); die Projektseite zeigt dasselbe Bild im Hero.
-  `docs/images/stage-photo.jpg` ist sein Fotoausschnitt für `docs/readme-title.html`, nur eine Vorlage, falls der
-  Titel einmal neu gebaut werden soll.
+- README-Bilder: Titelbild und Karten aus `docs/readme-images.json` mit `theme/v1/readme-images/render.mjs <repo>`
+  aus sh1ft-w.github.io: Titel als `docs/images/readme-title-{light,dark}.webp` (2560 × 1280, Fenster zeigt
+  `docs/images/title-shot-*.png`, den Funktionsblock der Projektseite mit 2× aufgenommen) plus `readme-title-social.png`
+  für die GitHub-Vorschau; die Karten stehen als Markdown-Tabellen zwischen `<!-- cards:… -->` im README, Icons in
+  `docs/images/icons/`. Die Projektseite zeigt das Titelbild im Hero.

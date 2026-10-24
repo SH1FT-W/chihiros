@@ -19,21 +19,20 @@
     ],
     "logo": "docs/images/readme-icon.png",
     "shot": {
-      "light": "docs/images/stage-photo.jpg",
-      "dark": "docs/images/stage-photo.jpg",
-      "srcW": 1120,
-      "winW": 1120,
-      "s": 0.64,
+      "light": "docs/images/title-shot-light.png",
+      "dark": "docs/images/title-shot-dark.png",
+      "srcW": 3200,
+      "winW": 3200,
+      "s": 0.28,
       "strips": [
         [
           0,
-          1000
+          2000
         ]
       ],
-      "bar": null,
-      "left": 560,
-      "top": 0,
-      "flat": true
+      "bar": "Home Assistant › Chihiros",
+      "left": 600,
+      "top": 70
     }
   },
   "colors": {
@@ -52,7 +51,7 @@
       "pillBg": "#ffffff",
       "pillLine": "rgba(50,5,10,0.08)",
       "win": "#1a0406",
-      "bar": ""
+      "bar": "linear-gradient(#ffffff, #f3f5f9)"
     },
     "dark": {
       "bg": "#140809",
@@ -69,7 +68,7 @@
       "pillBg": "rgba(255,255,255,0.06)",
       "pillLine": "rgba(255,255,255,0.10)",
       "win": "#1a0406",
-      "bar": ""
+      "bar": "linear-gradient(#2a2d33, #22252a)"
     }
   },
   "fonts": {

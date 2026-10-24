@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="docs/images/readme-title.webp" alt="Chihiros for Home Assistant: Your aquarium light, fully local. An AI-generated image of a planted aquarium with a Chihiros LED light, a four-channel dosing pump with bottles and a controller on a sideboard." />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-title-dark.webp" />
+  <img src="docs/images/readme-title-light.webp" alt="Chihiros: Your Chihiros lamps, steady over Bluetooth. The feature overview of the project page in a window." />
+</picture>
 
 <p>Chihiros LED lamps and the Chihiros dosing pump in Home Assistant.<br/>
 Steady over Bluetooth proxies, no app, no cloud.</p>
@@ -32,20 +35,26 @@ Chihiros controls **Chihiros LED lamps** and the **Chihiros dosing pump** over B
 <sub><b>JUST ARRIVED</b></sub>
 ## Every Chihiros lamp of the 0x5A family.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-cards-new-dark.png" />
-  <img src="docs/images/readme-cards-new-light.png" alt="All 0x5A lamps (26.10.3): A II, WRGB II, Pro and Slim, VIVID III, Universal WRGB, SEA_LED, Terrarium Egg, Z Light TINY and Commander 1, 4 and X, detected by their Bluetooth name. 1 to 4 channels (26.10.3): brightness, RGB or RGBW, as the lamp has them. VIVID III fan (26.10.3): fan speed or automatic by temperature, plus fan speed and temperature sensors. Calendar versions (26.10.1): year, month and the release of that month." />
-</picture>
+<!-- cards:new -->
+<table>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/lightbulb-group-outline-dark.svg"><img src="docs/images/icons/lightbulb-group-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>All 0x5A lamps</b> <code>26.10.3</code><br>A II, WRGB II, Pro and Slim, VIVID III, Universal WRGB, SEA_LED, Terrarium Egg, Z Light TINY and Commander 1, 4 and X, detected by their Bluetooth name.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/palette-outline-dark.svg"><img src="docs/images/icons/palette-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>1 to 4 channels</b> <code>26.10.3</code><br>Brightness, RGB or RGBW, as the lamp has them. Sliders, set_channels and schedules follow the channels of each model.</td></tr>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/fan-dark.svg"><img src="docs/images/icons/fan-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>VIVID III fan</b> <code>26.10.3</code><br>Fan speed or automatic by temperature, plus fan speed and temperature sensors.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/calendar-outline-dark.svg"><img src="docs/images/icons/calendar-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Calendar versions</b> <code>26.10.1</code><br>Year, month and the release of that month: 26.10.3 is the third release of October 2026.</td></tr>
+</table>
+<!-- /cards:new -->
 
 Every change, release by release, in the [changelog](CHANGELOG.md).
 
 <a id="features"></a>
 ## Features
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-cards-features-dark.png" />
-  <img src="docs/images/readme-cards-features-light.png" alt="Every channel a slider: red, green, blue, white or warm white from 0 to 100 percent, plus set_channels. A light with transitions: brightness keeps the mix, switching on brings back the last mix. Schedules in the lamp: daily curves and weekday schedules run in the lamp, even without Home Assistant. Sun, feeding, acclimatization. Dosing pump: dose, calibrate and program 1 to 8 channels, container level and push. Never doses twice. Never blocks the start. Kind to Bluetooth proxies." />
-</picture>
+<!-- cards:features -->
+<table>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/tune-vertical-dark.svg"><img src="docs/images/icons/tune-vertical-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Every channel a slider</b><br>Red, green, blue, white or warm white from 0 to 100 %, like in the app, plus the service set_channels.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/lightbulb-on-outline-dark.svg"><img src="docs/images/icons/lightbulb-on-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>A light with transitions</b><br>Brightness keeps the mix, transition fades in gentle steps, switching on brings back the last mix instead of 100 % white.</td></tr>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/calendar-clock-dark.svg"><img src="docs/images/icons/calendar-clock-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Schedules in the lamp</b><br>Daily curves and weekday schedules are written to the lamp, which then runs them by itself, even without Home Assistant.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/weather-sunset-dark.svg"><img src="docs/images/icons/weather-sunset-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Sun, feeding, acclimatization</b><br>A schedule after the real sun, a feeding light button and a dimmed start for new tanks.</td></tr>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/eyedropper-dark.svg"><img src="docs/images/icons/eyedropper-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Dosing pump</b><br>Dose, calibrate and program 1 to 8 channels. Counters from the pump, container level and a push when it runs low.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/shield-check-outline-dark.svg"><img src="docs/images/icons/shield-check-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Never doses twice</b><br>A dose is never repeated automatically: rather an error message than a double dose.</td></tr>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/rocket-launch-outline-dark.svg"><img src="docs/images/icons/rocket-launch-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Never blocks the start</b><br>First contact runs in the background after Home Assistant has started.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/bluetooth-connect-dark.svg"><img src="docs/images/icons/bluetooth-connect-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Kind to Bluetooth proxies</b><br>One connection at a time, a hard time limit and disconnect after 15 seconds idle, so other devices get their slot.</td></tr>
+</table>
+<!-- /cards:features -->
 
 **Lamps**
 - Every channel of the lamp **from 0 to 100 %** as a slider and with `chihiros.set_channels`, like in the app.
@@ -100,10 +109,13 @@ Lamps marked "no" speak the same protocol as the tested C II RGB and should work
 
 ## Entities
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-cards-entities-dark.png" />
-  <img src="docs/images/readme-cards-entities-light.png" alt="Light: brightness, RGB or RGBW with transition, attribute channels. Channel numbers: red, green, blue, white or warm per model. Switches and select: auto mode, sun cycle, acclimatization, scene. Fan (VIVID III): fan, fan_rpm, fan_temperature_celsius. Dosing pump: dose button and volume, counters, remaining, program. Diagnostics: reachable, signal strength, last contact, firmware." />
-</picture>
+<!-- cards:entities -->
+<table>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/lightbulb-outline-dark.svg"><img src="docs/images/icons/lightbulb-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Light</b><br>One light per lamp: brightness, RGB or RGBW with transition. Attribute channels shows every channel in %.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/tune-variant-dark.svg"><img src="docs/images/icons/tune-variant-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Channel numbers</b><br>red, green, blue, white or warm per model, plus feeding light duration, sun ramp and acclimatization.</td></tr>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/toggle-switch-outline-dark.svg"><img src="docs/images/icons/toggle-switch-outline-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Switches and select</b><br>auto_mode, sun cycle and acclimatization, scene (RGB lamps), sun earliest and latest as times.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/fan-dark.svg"><img src="docs/images/icons/fan-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Fan (VIVID III)</b><br>fan with speed and automatic mode, fan_rpm and fan_temperature_celsius.</td></tr>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/eyedropper-dark.svg"><img src="docs/images/icons/eyedropper-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Dosing pump</b><br>Per channel: dose button and volume, today, total, remaining, lasts, program, active and catch up switches.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/stethoscope-dark.svg"><img src="docs/images/icons/stethoscope-light.svg" width="26" height="26" alt=""></picture></td><td width="46%" valign="top"><b>Diagnostics</b><br>reachable with the last error, signal strength, last contact, firmware and a diagnostics download.</td></tr>
+</table>
+<!-- /cards:entities -->
 
 Entity IDs start with the device name, for new devices the Bluetooth name (for example `light.dyncrgp…`). After switching from the original integration the existing IDs stay.
 
@@ -211,10 +223,11 @@ When you open an [issue](https://github.com/SH1FT-W/chihiros/issues), please att
 
 ## How it works
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-cards-how-dark.png" />
-  <img src="docs/images/readme-cards-how-light.png" alt="One connection: over Home Assistant's Bluetooth or ESPHome proxies, a lock per device, disconnected after 15 seconds idle. The app's frames: channel levels, modes, schedule points and dosing commands as the My Chihiros app sends them. Remembers what you set: the lamp does not report its colour, Home Assistant keeps the last state and restores it after a power cut." />
-</picture>
+<!-- cards:how -->
+<table>
+<tr><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/bluetooth-dark.svg"><img src="docs/images/icons/bluetooth-light.svg" width="26" height="26" alt=""></picture></td><td width="29%" valign="top"><b>One connection</b><br>Over Home Assistant's Bluetooth or ESPHome proxies, a lock per device, disconnected after 15 seconds idle.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/swap-horizontal-dark.svg"><img src="docs/images/icons/swap-horizontal-light.svg" width="26" height="26" alt=""></picture></td><td width="29%" valign="top"><b>The app's frames</b><br>Channel levels, modes, schedule points and dosing commands, exactly as the My Chihiros app sends them.</td><td width="34" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/history-dark.svg"><img src="docs/images/icons/history-light.svg" width="26" height="26" alt=""></picture></td><td width="29%" valign="top"><b>Remembers what you set</b><br>The lamp does not report its colour. Home Assistant keeps the last state and restores it after a power cut.</td></tr>
+</table>
+<!-- /cards:how -->
 
 The Bluetooth protocol and the model table follow the documentation of [TheMicDiet/chihiros-led-control](https://github.com/TheMicDiet/chihiros-led-control) (MIT), which decoded the "My Chihiros" app and checked it with captures; thanks for the groundwork. Details are in [`NOTICE`](NOTICE) and, in German, in [`CLAUDE.md`](CLAUDE.md).
 
