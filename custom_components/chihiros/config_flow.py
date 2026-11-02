@@ -22,7 +22,7 @@ from .const import (
     DEFAULT_PUMPS,
     DOMAIN,
 )
-from .models import DEVICE_TYPES, DOSER_PREFIXES, detect_light, supported
+from .models import DEVICE_TYPES, DOSER_PREFIXES, detect_light, name_matches_address, supported
 
 __all__ = ["ChihirosConfigFlow", "supported"]
 
@@ -63,6 +63,8 @@ class ChihirosConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_bluetooth(self, discovery_info: BluetoothServiceInfoBleak) -> ConfigFlowResult:
         if not supported(discovery_info.name):
             return self.async_abort(reason="not_supported")
+        if not name_matches_address(discovery_info.name, discovery_info.address):
+            return self.async_abort(reason="address_mismatch")
         await self.async_set_unique_id(discovery_info.address.upper())
         self._abort_if_unique_id_configured()
         self._info = discovery_info
@@ -82,7 +84,7 @@ class ChihirosConfigFlow(ConfigFlow, domain=DOMAIN):
         current = self._async_current_ids(include_ignore=False)
         for info in async_discovered_service_info(self.hass, connectable=True):
             address = info.address.upper()
-            if supported(info.name) and address not in current:
+            if supported(info.name) and name_matches_address(info.name, address) and address not in current:
                 self._found[address] = info.name
         if not self._found:
             return self.async_abort(reason="no_devices_found")

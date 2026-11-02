@@ -28,6 +28,7 @@
       "already_configured": "This device is already set up.",
       "no_devices_found": "No supported Chihiros device in Bluetooth range.",
       "not_supported": "This Chihiros device is not supported (LED lamps and dosing pump only).",
+      "address_mismatch": "The Bluetooth name belongs to another device (its MAC does not match the address).",
       "reconfigure_successful": "Settings saved.",
       "nothing_to_reconfigure": "This lamp has nothing to reconfigure."
     }

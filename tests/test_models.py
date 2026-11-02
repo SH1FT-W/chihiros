@@ -235,3 +235,10 @@ async def test_stored_levels_of_other_layout_ignored(hass: HomeAssistant, device
     await hass.async_block_till_done()
     assert hass.states.get("light.dycom0011").state == "unknown"
     await hass.config_entries.async_unload(entry.entry_id)
+
+
+def test_name_matches_address():
+    assert models.name_matches_address("DYDOSEAABBCCDDEEFF", "aa:bb:cc:dd:ee:ff")
+    assert not models.name_matches_address("dydoseaabbccddeeff", "4F:12:9A:33:C0:01")  # ghost: name of another device
+    assert models.name_matches_address("DYNCRGP0011", "00:11:22:33:44:55")  # no MAC in the name: nothing to compare
+    assert models.name_matches_address("DYDOSEAABBCCDDEEFF", "0E6B1D2C-6C3A-4F8E-9B1A-2D3C4E5F6A7B")  # macOS: no MAC

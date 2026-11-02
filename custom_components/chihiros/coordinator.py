@@ -860,6 +860,9 @@ class ChihirosDoser(ChihirosDevice):
     def _on_device_total(self, values: tuple[int, ...]) -> None:
         """Gesamtzähler merken; Füllstand ohne Zähler-Startwert (Pumpe war beim Auffüllen still) hier verankern."""
         for p, ul in zip(self.pumps, values, strict=False):
+            if p.refill_device_ul is not None and p.device_ul is not None and ul < p.device_ul:
+                # The counter went back (totals reset here or in the app): keep what was used before.
+                p.refill_device_ul -= p.device_ul
             p.device_ul = ul
             if p.refill_at is not None and p.refill_device_ul is None:
                 # was HA seit dem Auffüllen schon selbst dosiert hat, zählt als verbraucht
@@ -994,13 +997,21 @@ class ChihirosDoser(ChihirosDevice):
 
     # --- Behälter ----------------------------------------------------------------------------------
 
-    def used_since_refill(self, pump: int) -> float | None:
-        p = self.pumps[pump - 1]
-        if not p.capacity or p.refill_at is None:
+    @staticmethod
+    def _used_ul(p: PumpCounters) -> int | None:
+        """Microliters used since the refill (pump counter if known, else HA counter); None = never refilled."""
+        if p.refill_at is None:
             return None
         if p.refill_device_ul is not None and p.device_ul is not None:
-            return max(0.0, (p.device_ul - p.refill_device_ul) / 1000)
-        return max(0.0, p.total_ml - p.refill_ha_ml)
+            return p.device_ul - p.refill_device_ul
+        return round((p.total_ml - p.refill_ha_ml) * 1000)
+
+    def used_since_refill(self, pump: int) -> float | None:
+        p = self.pumps[pump - 1]
+        used = self._used_ul(p)
+        if not p.capacity or used is None:
+            return None
+        return max(0.0, used / 1000)
 
     def remaining(self, pump: int) -> float | None:
         used = self.used_since_refill(pump)
@@ -1127,8 +1138,12 @@ class ChihirosDoser(ChihirosDevice):
             [protocol.reset_totals(self.link.ids, pump - 1), *protocol.dosing_auth(self.link.ids)], wait=1.5
         )
         p = self.pumps[pump - 1]
+        # The HA counter restarts at 0: move its refill baseline along so the container level stays.
+        # (The pump counter is rebased in `_on_device_total` once the pump reports it lower.)
+        p.refill_ha_ml = round(p.refill_ha_ml - p.total_ml, 2)
         p.total_ml, p.cycles = 0.0, 0
         self.save()
+        self._check_containers()
         self.async_update_listeners()
 
     def set_volume(self, pump: int, ml: float) -> None:

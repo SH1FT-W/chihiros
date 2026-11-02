@@ -110,6 +110,11 @@ class ChihirosLink:
             except ChihirosUnavailable as err:
                 self._failed(str(err))
                 raise
+            except asyncio.CancelledError:
+                # Unload cancels a running send after disconnect() skipped it (lock held): close the connection
+                # here, otherwise nobody would and it keeps the proxy slot.
+                await self._drop()
+                raise
             self.last_error = None
             self._arm_idle()
 

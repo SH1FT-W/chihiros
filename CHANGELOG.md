@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.11.1 – 02.11.2026
+
+- **Container level after resetting the totals:** resetting a pump's totals (here or in the Chihiros app) no longer makes the container look full again. The level keeps counting from what was used before the reset, so the low-level warning and push still arrive.
+- **No more ghost discoveries:** a Bluetooth proxy can pair the cached name of a Chihiros device with another address. Discovery now ignores a device whose name ends with a MAC that does not match its address.
+- **Connection closed on unload:** if the integration is unloaded or reloaded while a command is running, the Bluetooth connection is closed instead of being left open on the proxy.
+
 ## 26.10.4 – 19.10.2026
 
 - **Exact brightness:** channel values are sent unchanged, like the official app. Before, 90 % was sent as 89 % because the byte 0x5A was wrongly treated as reserved (only the message ID avoids it). Found in the protocol fixes of the original integration (v0.19.0).

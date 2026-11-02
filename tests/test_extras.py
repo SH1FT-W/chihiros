@@ -346,3 +346,81 @@ async def test_remaining_anchors_when_counter_arrives_later(hass: HomeAssistant,
     assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "194.0"
     # Gesamtzähler gleich nach dem Neuladen sichtbar (aus dem Speicher), nicht erst nach der nächsten Meldung
     assert hass.states.get(f"sensor.{P}_pumpe_1_gesamt").state == "111.5"
+
+
+async def test_remaining_survives_counter_reset(hass: HomeAssistant, doser, devices: FakeDevices, freezer):
+    """Resetting the totals must not refill the container: the pump counter restarts at 0, the remaining stays."""
+    pushes: list[dict] = []
+
+    async def fake_push(call) -> None:
+        pushes.append(dict(call.data))
+
+    hass.services.async_register("notify", "handy", fake_push)
+    hass.config_entries.async_update_entry(doser, options={"notify_service": "notify.handy", "notify_percent": 20})
+    await tick(hass, freezer, 91)
+    await call(hass, "number", "set_value", {"entity_id": f"number.{P}_pumpe_1_behaltergrosse", "value": 100})
+    devices.total[0] = 1055 + 300  # 30 ml used
+    await tick(hass, freezer, 86400)
+    assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "70.0"
+    device_id = dr.async_entries_for_config_entry(dr.async_get(hass), doser.entry_id)[0].id
+    await call(hass, DOMAIN, "reset_pump_totals", {"device_id": device_id, "pump": 1})
+    assert devices.total[0] == 0
+    await tick(hass, freezer, 30 * 60)
+    assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "70.0"
+    devices.total[0] = 550  # another 55 ml after the reset → 15 ml left (15 %)
+    await tick(hass, freezer, 86400)
+    assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "15.0"
+    await hass.async_block_till_done()
+    assert len(pushes) == 1
+
+
+async def test_remaining_survives_ha_counter_reset(hass: HomeAssistant, doser, devices: FakeDevices):
+    """Pump without counter reports: the HA counter carries the level; a reset keeps it too."""
+    devices.counters = False
+    await call(hass, "number", "set_value", {"entity_id": f"number.{P}_pumpe_1_behaltergrosse", "value": 100})
+    coordinator = doser.runtime_data
+    p = coordinator.pumps[0]
+    p.total_ml = 40.0  # 40 ml dosed by HA since the refill
+    assert coordinator.remaining(1) == 60.0
+    await coordinator.async_reset_totals(1)
+    assert p.total_ml == 0.0
+    assert coordinator.remaining(1) == 60.0
+
+
+async def test_remaining_after_reset_in_app_or_lost(hass: HomeAssistant, doser, devices: FakeDevices, freezer):
+    """The level follows the pump counter: a reset made in the app keeps it, a reset the pump missed too."""
+    await tick(hass, freezer, 91)
+    await call(hass, "number", "set_value", {"entity_id": f"number.{P}_pumpe_1_behaltergrosse", "value": 100})
+    devices.total[0] = 1055 + 300  # 30 ml used
+    await tick(hass, freezer, 86400)
+    devices.total[0] = 0  # totals reset in the Chihiros app
+    await tick(hass, freezer, 30 * 60)
+    assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "70.0"
+    device_id = dr.async_entries_for_config_entry(dr.async_get(hass), doser.entry_id)[0].id
+    devices.total[0] = 100  # 10 ml more, then a reset frame the pump never gets
+    devices.apply_reset = False
+    await call(hass, DOMAIN, "reset_pump_totals", {"device_id": device_id, "pump": 1})
+    await tick(hass, freezer, 30 * 60)
+    assert devices.total[0] == 100
+    assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "60.0"
+
+
+async def test_reset_when_low_pushes_once(hass: HomeAssistant, doser, devices: FakeDevices, freezer):
+    """Resetting the totals of an almost empty container must not send the push a second time."""
+    pushes: list[dict] = []
+
+    async def fake_push(call) -> None:
+        pushes.append(dict(call.data))
+
+    hass.services.async_register("notify", "handy", fake_push)
+    hass.config_entries.async_update_entry(doser, options={"notify_service": "notify.handy", "notify_percent": 20})
+    await tick(hass, freezer, 91)
+    await call(hass, "number", "set_value", {"entity_id": f"number.{P}_pumpe_1_behaltergrosse", "value": 100})
+    devices.total[0] = 1055 + 850  # 85 ml used → 15 ml left
+    await tick(hass, freezer, 86400)
+    assert len(pushes) == 1
+    device_id = dr.async_entries_for_config_entry(dr.async_get(hass), doser.entry_id)[0].id
+    await call(hass, DOMAIN, "reset_pump_totals", {"device_id": device_id, "pump": 1})
+    await tick(hass, freezer, 30 * 60)
+    assert hass.states.get(f"sensor.{P}_pumpe_1_restmenge").state == "15.0"
+    assert len(pushes) == 1

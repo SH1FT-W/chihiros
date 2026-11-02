@@ -112,11 +112,20 @@ async def test_config_flow_bluetooth_and_user(hass: HomeAssistant, bt):
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_BLUETOOTH}, data=other)
     assert result["reason"] == "not_supported"
 
+    # Ghost: a proxy paired a pump name (which ends with the pump's MAC) with some other address.
+    ghost = MagicMock()
+    ghost.name, ghost.address = "DYDOSEAABBCCDDEEFF", "4F:12:9A:33:C0:01"
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_BLUETOOTH}, data=ghost)
+    assert result["reason"] == "address_mismatch"
+
     lamp = MagicMock()
     lamp.name, lamp.address = "DYNCRGP0011", "00:11:22:33:44:55"
-    with patch("custom_components.chihiros.config_flow.async_discovered_service_info", return_value=[lamp, other]):
+    with patch(
+        "custom_components.chihiros.config_flow.async_discovered_service_info", return_value=[lamp, other, ghost]
+    ):
         result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_USER})
         assert result["type"] is FlowResultType.FORM
+        assert list(result["data_schema"].schema["address"].container) == ["00:11:22:33:44:55"]
         result = await hass.config_entries.flow.async_configure(result["flow_id"], {"address": "00:11:22:33:44:55"})
     assert result["type"] is FlowResultType.CREATE_ENTRY and result["data"] == {
         "address": "00:11:22:33:44:55",

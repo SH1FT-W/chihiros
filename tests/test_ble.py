@@ -169,3 +169,21 @@ async def test_hm10_write_and_bad_notification(hass: HomeAssistant, link):
     client.disconnect.side_effect = BleakError("schon weg")
     lk._client = client
     await lk.disconnect()
+
+
+async def test_cancelled_send_disconnects(hass: HomeAssistant, link):
+    """Unload while a send holds the lock: disconnect() skips, HA then cancels the task; the connection must go."""
+    lk, _ = link
+    client = make_client()
+    with patch.object(ble, "establish_connection", AsyncMock(return_value=client)):
+        task = hass.async_create_task(lk.send([b"x"], wait=5))
+        for _ in range(10):
+            await asyncio.sleep(0)
+        assert lk.connected
+        await lk.disconnect()  # async_stop: the lock is held, nothing happens
+        client.disconnect.assert_not_awaited()
+        task.cancel()  # what HA does with the entry's background tasks after async_unload_entry
+        with pytest.raises(asyncio.CancelledError):
+            await task
+    assert not lk.connected
+    client.disconnect.assert_awaited()

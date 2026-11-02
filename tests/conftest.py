@@ -62,6 +62,8 @@ class FakeDevices:
         self.firmware = 0x17
         self.daily = [0, 1, 2, 3]  # 0,1-ml-Schritte × 100 µl
         self.total = [1055, 0, 40, 30]
+        self.counters = True  # pump answers the auth with its counters (False: firmware that never reports them)
+        self.apply_reset = True  # False: the reset frame gets lost, the pump keeps counting
         self.red_curve: list[tuple[int, int, int]] | None = None  # None = Mitschnitt-Ablauf aus der Doku
         self.drop_after_reset = 0  # so viele Rahmen nach „Ablauf löschen“ verschlucken (wie die echte Lampe)
         self._dropping = 0
@@ -108,7 +110,11 @@ class FakeDevices:
             link._on_notification(bytes(snap))
             if self.fan:  # 600 U/min, 25 °C (Mitschnitt aus der Doku)
                 link._on_notification(bytes.fromhex("5b1b1000010b02581900010000000000004822"))
-        if cmd == 0xA5 and mode == 0x04:
+        if (
+            cmd == 0xA5 and mode == 0x05 and 21 <= f[6] <= 24 and self.apply_reset
+        ):  # reset a pump total counter (25+ resets a program)
+            self.total[f[6] - 21] = 0
+        if cmd == 0xA5 and mode == 0x04 and self.counters:
             values = self.total if f[6] == 4 else self.daily
             body = bytearray([0x5B, 0x10, 0x10, 0, 1, 0x1E if f[6] == 4 else 0x22])
             for v in values:

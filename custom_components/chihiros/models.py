@@ -10,6 +10,7 @@ the lamp expects in `0x5A/07` (manual level) and `0x5A/06` (curve point).
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 
 Layout = tuple[tuple[str, int], ...]
 
@@ -102,3 +103,21 @@ def is_lite(name: str | None) -> bool:
 
 def supported(name: str | None) -> bool:
     return bool(name) and str(name).upper().startswith(LIGHT_PREFIXES + DOSER_PREFIXES)
+
+
+_MAC_TAIL = re.compile(r"[0-9A-F]{12}$")
+_MAC = re.compile(r"^[0-9A-F]{2}(:[0-9A-F]{2}){5}$")
+
+
+def name_matches_address(name: str | None, address: str) -> bool:
+    """Chihiros devices end their Bluetooth name with their own MAC (e.g. DYDOSE + AABBCCDDEEFF).
+
+    A Bluetooth proxy can pair a cached name with a different address (another device, a random address);
+    such a ghost carries the MAC of a real device in its name. Only compared when both sides hold a MAC
+    (macOS reports UUIDs instead of addresses).
+    """
+    tail = _MAC_TAIL.search((name or "").upper())
+    addr = address.upper()
+    if tail is None or not _MAC.match(addr):
+        return True
+    return tail.group() == addr.replace(":", "")
