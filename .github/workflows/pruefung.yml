@@ -58,8 +58,9 @@ jobs:
       - uses: home-assistant/actions/hassfest@06749dd8c0b54f350bc69c8752456cee498808a3 # master 2026-09-30
 
   ha-neueste:
-    # Frühwarnung: Tests gegen die neueste pytest-homeassistant-custom-component (zieht die aktuelle HA mit).
-    # Darf rot sein, blockiert nichts.
+    # Frühwarnung: Tests gegen die neueste HA (auch Beta) mit HAs eigenem Testpaket pytest-homeassistant,
+    # dessen Version der HA-Version entspricht. pytest-homeassistant-custom-component ist seit 03.11.2026
+    # eingestellt und hängt an HA 2026.10.4. Darf rot sein, blockiert nichts.
     name: Tests gegen neueste HA (Frühwarnung)
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -73,7 +74,28 @@ jobs:
       - name: Installieren (neueste)
         run: |
           uv venv --python 3.14
-          sed -E 's/==.*//' requirements_test.txt > /tmp/req-neu.txt
-          uv pip install --prerelease=allow -r /tmp/req-neu.txt
+          grep -v -i -E '^(homeassistant|pytest-homeassistant-custom-component)==' requirements_test.txt \
+            | sed -E 's/==.*//' > /tmp/req-neu.txt
+          uv pip install --prerelease=allow "pytest-homeassistant[bluetooth]" -r /tmp/req-neu.txt
+      - name: Alte Importe umleiten
+        # Die Tests importieren für die Mindestversion noch pytest_homeassistant_custom_component;
+        # hier zeigt der Name auf pytest_homeassistant.
+        run: |
+          site=$(.venv/bin/python -c "import sysconfig; print(sysconfig.get_paths()['purelib'])")
+          mkdir -p "$site/pytest_homeassistant_custom_component"
+          cat > "$site/pytest_homeassistant_custom_component/__init__.py" <<'EOF'
+          import importlib, importlib.abc, importlib.machinery, sys
+          class _Loader(importlib.abc.Loader):
+              def __init__(self, real): self.real = real
+              def create_module(self, spec): return importlib.import_module(self.real)
+              def exec_module(self, module): pass
+          class _Finder(importlib.abc.MetaPathFinder):
+              def find_spec(self, name, path=None, target=None):
+                  old = "pytest_homeassistant_custom_component."
+                  if name.startswith(old):
+                      return importlib.machinery.ModuleSpec(name, _Loader("pytest_homeassistant." + name[len(old):]))
+          sys.meta_path.insert(0, _Finder())
+          EOF
       - name: Tests
-        run: .venv/bin/python -m pytest -q -p no:logging
+        # respx-Plugin aus: HA setzt seinen httpx-Alias, bevor respx geladen wird
+        run: .venv/bin/python -m pytest -q -p no:logging -p no:respx
