@@ -10,7 +10,7 @@ Steady over Bluetooth proxies, no app, no cloud.</p>
 
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FSH1FT-W%2Fchihiros%2Fmain%2Fcustom_components%2Fchihiros%2Fmanifest.json&query=%24.version&label=version&style=flat-square&color=e60012&labelColor=111111)](https://github.com/SH1FT-W/chihiros/releases/latest)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.9%2B-e60012?style=flat-square&labelColor=111111&logo=homeassistant&logoColor=white)](https://www.home-assistant.io)
-[![HACS](https://img.shields.io/badge/HACS-custom%20repository-e60012?style=flat-square&labelColor=111111)](https://hacs.xyz)
+[![Marketplace](https://img.shields.io/badge/Marketplace-custom%20repository-e60012?style=flat-square&labelColor=111111)](https://hacs.xyz)
 [![IoT class](https://img.shields.io/badge/iot-local%20push-e60012?style=flat-square&labelColor=111111)](https://developers.home-assistant.io/docs/creating_integration_manifest/#iot-class)
 [![Quality scale](https://img.shields.io/badge/quality%20scale-platinum%20(self--assessed)-e60012?style=flat-square&labelColor=111111)](custom_components/chihiros/quality_scale.yaml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-e60012?style=flat-square&labelColor=111111)](LICENSE)
@@ -167,9 +167,11 @@ If the device is not reachable or an input does not fit (for example channel 5 o
 
 ## Installation
 
-### HACS (custom repository)
+### Marketplace (custom repository)
 
-1. In HACS, open the three dots menu, choose **Custom repositories** and add `https://github.com/SH1FT-W/chihiros` with the type **Integration**.
+The Marketplace is under Settings → Marketplace. On Home Assistant before 2026.11 it is still called HACS.
+
+1. In the Marketplace, open the three dots menu, choose **Custom repositories** and add `https://github.com/SH1FT-W/chihiros` with the type **Integration**.
 2. Search for **Chihiros**, download it and restart Home Assistant.
 
 ### Manual
@@ -185,7 +187,7 @@ Devices in range are discovered automatically (**Settings > Devices & services**
 
 ## Switching from the original integration
 
-1. In HACS, remove "chihiros" by TheMicDiet. Keep the integration entries.
+1. In the Marketplace, remove "chihiros" by TheMicDiet. Keep the integration entries.
 2. Install this integration (see above) and restart Home Assistant.
 3. Existing entries are taken over: entities, history and automations stay.
 
@@ -219,7 +221,7 @@ When you open an [issue](https://github.com/SH1FT-W/chihiros/issues), please att
 ## Removal
 
 1. **Settings > Devices & services > Chihiros > three dots > Delete** (per device). The schedule or dosing program stays stored in the device and keeps running.
-2. Delete the folder `/config/custom_components/chihiros` (or remove the repository in HACS) and restart Home Assistant.
+2. Delete the folder `/config/custom_components/chihiros` (or remove the repository in the Marketplace) and restart Home Assistant.
 
 ## How it works
 

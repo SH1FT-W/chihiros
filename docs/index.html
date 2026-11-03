@@ -270,7 +270,7 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
     <h1 class="reveal d1"><span class="en">Your Chihiros lamps,<br><em>steady over Bluetooth.</em></span><span class="de">Deine Chihiros-Lampen,<br><em>stabil über Bluetooth.</em></span></h1>
     <p class="lead reveal d2"><span class="en">Chihiros talks to Chihiros LED lamps and the dosing pump through Home Assistant's Bluetooth and ESPHome proxies: <strong>every channel as a slider, daily schedules written to the lamp, dosing that is never repeated</strong>. No app, no cloud.</span><span class="de">Chihiros spricht über das Bluetooth von Home Assistant und ESPHome-Proxys mit Chihiros-LED-Lampen und der Dosierpumpe: <strong>jeder Kanal ein Regler, Tagesabläufe direkt in der Lampe, Dosieren, das nie wiederholt wird</strong>. Ohne App, ohne Cloud.</span></p>
     <div class="cta reveal d3">
-      <a class="btn" href="#install"><span class="en">Install with HACS</span><span class="de">Mit HACS installieren</span></a>
+      <a class="btn" href="#install"><span class="en">Install from the Marketplace</span><span class="de">Über den Marketplace installieren</span></a>
       <a class="btn ghost" href="https://github.com/SH1FT-W/chihiros#readme"><span class="en">Read the README</span><span class="de">Zur Anleitung</span></a>
     </div>
     <p class="meta reveal d3">
@@ -350,11 +350,11 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
     </div>
     <div class="install">
       <div class="panel reveal">
-        <h3><span class="en">With HACS</span><span class="de">Mit HACS</span></h3>
+        <h3><span class="en">With the Marketplace</span><span class="de">Mit dem Marketplace</span></h3>
         <p class="muted"><span class="en">As a custom repository.</span><span class="de">Als benutzerdefiniertes Repository.</span></p>
         <ol class="steps">
-          <li class="en">In HACS, add a custom repository of type <b>Integration</b>:</li>
-          <li class="de">Füge in HACS ein benutzerdefiniertes Repository vom Typ <b>Integration</b> hinzu:</li>
+          <li class="en">In the Marketplace, add a custom repository of type <b>Integration</b>:</li>
+          <li class="de">Füge im Marketplace ein benutzerdefiniertes Repository vom Typ <b>Integration</b> hinzu:</li>
         </ol>
         <div class="repo"><code id="repo">https://github.com/SH1FT-W/chihiros</code><button class="copy" type="button" data-copy="repo"><span class="en">Copy</span><span class="de">Kopieren</span></button></div>
         <ol class="steps" style="counter-reset: s 1">
@@ -379,17 +379,17 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
       <div class="panel full reveal" id="migrate">
         <h3><span class="en">Coming from the original integration</span><span class="de">Umstieg von der ursprünglichen Integration</span></h3>
         <ol class="steps">
-          <li class="en"><b>Remove "chihiros" by TheMicDiet in HACS</b>, but keep the integration entries.</li>
+          <li class="en"><b>Remove "chihiros" by TheMicDiet in the Marketplace</b>, but keep the integration entries.</li>
           <li class="en"><b>Install Chihiros</b> and restart Home Assistant.</li>
           <li class="en"><b>Done.</b> Existing entries are taken over: entity IDs, history and automations stay.</li>
-          <li class="de"><b>„chihiros“ von TheMicDiet in HACS entfernen</b>, die Integrationseinträge aber behalten.</li>
+          <li class="de"><b>„chihiros“ von TheMicDiet im Marketplace entfernen</b>, die Integrationseinträge aber behalten.</li>
           <li class="de"><b>Chihiros installieren</b> und Home Assistant neu starten.</li>
           <li class="de"><b>Fertig.</b> Vorhandene Einträge werden übernommen: Entity-IDs, Verlauf und Automationen bleiben.</li>
         </ol>
         <p class="note"><span class="en">Both use the domain <code>chihiros</code>: never install both at the same time. Two old entities stay behind as "no longer provided" (<code>…_last_notification</code>, <code>…_calibrate_pump</code>) and can be deleted.</span><span class="de">Beide nutzen die Domain <code>chihiros</code>: nie beide gleichzeitig installieren. Zwei alte Entitäten bleiben als „nicht mehr bereitgestellt“ übrig (<code>…_last_notification</code>, <code>…_calibrate_pump</code>) und können gelöscht werden.</span></p>
       </div>
       <div class="panel full reveal">
-        <h3><span class="en">Without HACS</span><span class="de">Ohne HACS</span></h3>
+        <h3><span class="en">Without the Marketplace</span><span class="de">Ohne Marketplace</span></h3>
         <p class="muted"><span class="en">Download the <a href="https://github.com/SH1FT-W/chihiros/releases/latest">latest release</a>, copy its <code>custom_components/chihiros</code> folder into <code>/config/custom_components/</code>, restart Home Assistant and confirm the discovered device.</span><span class="de">Lade das <a href="https://github.com/SH1FT-W/chihiros/releases/latest">neueste Release</a> herunter, kopiere den Ordner <code>custom_components/chihiros</code> nach <code>/config/custom_components/</code>, starte Home Assistant neu und bestätige das gefundene Gerät.</span></p>
       </div>
     </div>
@@ -433,7 +433,7 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
       <a href="https://github.com/SH1FT-W/chihiros/blob/main/CHANGELOG.md">Changelog</a>
       <a href="https://github.com/SH1FT-W/chihiros/releases">Releases</a>
       <a href="https://github.com/SH1FT-W/chihiros/issues"><span class="en">Issues</span><span class="de">Fehler melden</span></a>
-      <a href="https://hacs.xyz">HACS</a>
+      <a href="https://hacs.xyz/docs/marketplace/">Marketplace</a>
       <a href="https://github.com/SH1FT-W/chihiros">GitHub</a>
       <a href="https://github.com/SH1FT-W/chihiros/blob/main/LICENSE"><span class="en">Apache 2.0 License</span><span class="de">Apache-2.0-Lizenz</span></a>
     </nav>
