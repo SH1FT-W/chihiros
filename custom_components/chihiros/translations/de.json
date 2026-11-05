@@ -89,7 +89,7 @@
         "name": "Eingewöhnung Start-Helligkeit"
       },
       "acclim_weeks": {
-        "name": "Eingewöhnung Dauer"
+        "name": "Eingewöhnung Dauer (Wochen)"
       },
       "capacity": {
         "name": "Pumpe {pump} Behältergröße"

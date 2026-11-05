@@ -69,10 +69,18 @@ async def test_feeding_returns_to_previous(hass: HomeAssistant, light, devices: 
     assert levels(devices) == {0: 1, 1: 1, 2: 1}
 
 
+async def test_acclimatization_duration_says_weeks(hass: HomeAssistant, light):
+    # HA shows the bare symbol "w" for UnitOfTime.WEEKS and takes translated units from English only,
+    # so the name carries "Wochen" and there is no unit
+    duration = hass.states.get(f"number.{L}_eingewohnung_dauer_wochen")
+    assert duration.attributes["friendly_name"].endswith("Eingewöhnung Dauer (Wochen)")
+    assert "unit_of_measurement" not in duration.attributes
+
+
 async def test_acclimatization_scales_everything(hass: HomeAssistant, light, devices: FakeDevices, freezer):
     await call(hass, DOMAIN, "set_channels", {"entity_id": LIGHT, "red": 80, "green": 40, "blue": 20})
     await call(hass, "number", "set_value", {"entity_id": f"number.{L}_eingewohnung_start_helligkeit", "value": 50})
-    await call(hass, "number", "set_value", {"entity_id": f"number.{L}_eingewohnung_dauer", "value": 2})
+    await call(hass, "number", "set_value", {"entity_id": f"number.{L}_eingewohnung_dauer_wochen", "value": 2})
     await call(hass, "switch", "turn_on", {"entity_id": f"switch.{L}_eingewohnung"})
     assert levels(devices) == {0: 40, 1: 20, 2: 10}  # 50 % am ersten Tag
     assert hass.states.get(f"number.{L}_rot").state == "80"  # HA zeigt den Wunschwert

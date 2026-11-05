@@ -25,7 +25,7 @@ async def async_setup_entry(
                 LightSettingNumber(device, "feed_minutes", 1, 120, UnitOfTime.MINUTES),
                 LightSettingNumber(device, "sun_ramp", 5, 240, UnitOfTime.MINUTES),
                 LightSettingNumber(device, "acclim_start", 10, 100, PERCENTAGE),
-                LightSettingNumber(device, "acclim_weeks", 1, 12, UnitOfTime.WEEKS),
+                LightSettingNumber(device, "acclim_weeks", 1, 12, None),  # "weeks" is in the name, HA would show "w"
             ]
         )
     elif isinstance(device, ChihirosDoser):
@@ -95,7 +95,7 @@ class LightSettingNumber(ChihirosEntity, NumberEntity):
     _attr_mode = NumberMode.BOX
     _attr_native_step = 1
 
-    def __init__(self, device: ChihirosLight, key: str, low: int, high: int, unit: str) -> None:
+    def __init__(self, device: ChihirosLight, key: str, low: int, high: int, unit: str | None) -> None:
         super().__init__(device, key)
         self._attr_native_min_value, self._attr_native_max_value = low, high
         self._attr_native_unit_of_measurement = unit

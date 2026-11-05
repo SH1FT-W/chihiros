@@ -89,7 +89,7 @@
         "name": "Acclimatization start brightness"
       },
       "acclim_weeks": {
-        "name": "Acclimatization duration"
+        "name": "Acclimatization duration (weeks)"
       },
       "capacity": {
         "name": "Pump {pump} container size"

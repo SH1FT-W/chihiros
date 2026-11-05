@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.11.2 – unreleased
+
+- **Acclimatization duration says "weeks":** the setting showed only a bare "w" as unit. Home Assistant always shows units as English symbols, so the name now reads "Acclimatization duration (weeks)" (German: "Eingewöhnung Dauer (Wochen)") and the unit is gone. The entity ID of existing installations stays the same.
+
 ## 26.11.1 – 02.11.2026
 
 - **Container level after resetting the totals:** resetting a pump's totals (here or in the Chihiros app) no longer makes the container look full again. The level keeps counting from what was used before the reset, so the low-level warning and push still arrive.
