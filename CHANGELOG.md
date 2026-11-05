@@ -1,8 +1,9 @@
 # Changelog
 
-## 26.11.2 – unreleased
+## 26.11.2 – 05.11.2026
 
 - **Acclimatization duration says "weeks":** the setting showed only a bare "w" as unit. Home Assistant always shows units as English symbols, so the name now reads "Acclimatization duration (weeks)" (German: "Eingewöhnung Dauer (Wochen)") and the unit is gone. The entity ID of existing installations stays the same.
+- README and project page: new layout, shorter and easier to scan, with one table at the core.
 
 ## 26.11.1 – 02.11.2026
 
