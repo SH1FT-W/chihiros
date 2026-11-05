@@ -5,132 +5,132 @@
   <img src="docs/images/readme-title-light.webp" alt="Chihiros: Your Chihiros lamps, steady over Bluetooth. The feature overview of the project page in a window." />
 </picture>
 
-<p>Chihiros LED lamps and the Chihiros dosing pump in Home Assistant.<br/>
-Steady over Bluetooth proxies, no app, no cloud.</p>
-
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FSH1FT-W%2Fchihiros%2Fmain%2Fcustom_components%2Fchihiros%2Fmanifest.json&query=%24.version&label=version&style=flat-square&color=e60012&labelColor=111111)](https://github.com/SH1FT-W/chihiros/releases/latest)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.9%2B-e60012?style=flat-square&labelColor=111111&logo=homeassistant&logoColor=white)](https://www.home-assistant.io)
 [![Marketplace](https://img.shields.io/badge/Marketplace-default-e60012?style=flat-square&labelColor=111111)](https://hacs.xyz)
-[![IoT class](https://img.shields.io/badge/iot-local%20push-e60012?style=flat-square&labelColor=111111)](https://developers.home-assistant.io/docs/creating_integration_manifest/#iot-class)
-[![Quality scale](https://img.shields.io/badge/quality%20scale-platinum%20(self--assessed)-e60012?style=flat-square&labelColor=111111)](custom_components/chihiros/quality_scale.yaml)
-[![License](https://img.shields.io/badge/license-Apache%202.0-e60012?style=flat-square&labelColor=111111)](LICENSE)
 
-<p><a href="https://sh1ft-w.github.io/chihiros"><b>Website</b></a> &nbsp;·&nbsp; <a href="#new">New</a> &nbsp;·&nbsp; <a href="#features">Features</a> &nbsp;·&nbsp; <a href="#supported-devices">Devices</a> &nbsp;·&nbsp; <a href="#installation">Install</a> &nbsp;·&nbsp; <a href="#switching-from-the-original-integration">Switching</a> &nbsp;·&nbsp; <a href="#troubleshooting">Troubleshooting</a> &nbsp;·&nbsp; <a href="CHANGELOG.md">Changelog</a></p>
+<a href="https://sh1ft-w.github.io/chihiros"><b>Website</b></a>&emsp;<a href="#supported-devices">Devices</a>&emsp;<a href="#install">Install</a>&emsp;<a href="#set-up">Set up</a>&emsp;<a href="#entities">Entities</a>&emsp;<a href="CHANGELOG.md">Changelog</a>
 
 </div>
 
 <br/>
 
-Chihiros controls **Chihiros LED lamps** and the **Chihiros dosing pump** over Bluetooth, directly through Home Assistant's Bluetooth adapter or ESPHome Bluetooth proxies. It is a complete rewrite and succeeds [TheMicDiet/chihiros-led-control](https://github.com/TheMicDiet/chihiros-led-control).
+Your Chihiros LED lamps and the Chihiros dosing pump in Home Assistant: **every channel as a slider, schedules written to the lamp, doses and dosing programs.** Over Home Assistant's Bluetooth or ESPHome Bluetooth proxies, without the app and without cloud.
 
-> [!IMPORTANT]
-> This integration uses **the same domain `chihiros`** as the original integration and keeps its unique IDs, so entities, history, automations and dashboards stay when you switch. Because of that, **the two cannot be installed at the same time**: remove the original before installing this one.
+It is a complete rewrite of [TheMicDiet/chihiros-led-control](https://github.com/TheMicDiet/chihiros-led-control) with **the same domain `chihiros`** and the same unique IDs, so entities, history and automations stay when you [switch](#switching). For the same reason **the two cannot be installed at the same time.**
 
-> [!NOTE]
-> Chihiros (this integration) is an independent project. It is not affiliated with, endorsed by or sponsored by Chihiros. Chihiros is a trademark of its owner.
-
-<br/>
-
-<a id="new"></a>
-<sub><b>JUST ARRIVED</b></sub>
-## Every Chihiros lamp of the 0x5A family.
-
-<!-- cards:new -->
-<table>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/lightbulb-group-outline-dark.svg"><img src="docs/images/icons/lightbulb-group-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>All 0x5A lamps</b> <code>26.10.3</code><br>A II, WRGB II, Pro and Slim, VIVID III, Universal WRGB, SEA_LED, Terrarium Egg, Z Light TINY and Commander 1, 4 and X, detected by their Bluetooth name.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/palette-outline-dark.svg"><img src="docs/images/icons/palette-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>1 to 4 channels</b> <code>26.10.3</code><br>Brightness, RGB or RGBW, as the lamp has them. Sliders, set_channels and schedules follow the channels of each model.</td></tr>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/fan-dark.svg"><img src="docs/images/icons/fan-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>VIVID III fan</b> <code>26.10.3</code><br>Fan speed or automatic by temperature, plus fan speed and temperature sensors.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/calendar-outline-dark.svg"><img src="docs/images/icons/calendar-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Calendar versions</b> <code>26.10.1</code><br>Year, month and the release of that month: 26.10.3 is the third release of October 2026.</td></tr>
-</table>
-<!-- /cards:new -->
-
-Every change, release by release, in the [changelog](CHANGELOG.md).
-
-<a id="features"></a>
-## Features
-
-<!-- cards:features -->
-<table>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/tune-vertical-dark.svg"><img src="docs/images/icons/tune-vertical-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Every channel a slider</b><br>Red, green, blue, white or warm white from 0 to 100 %, like in the app, plus the service set_channels.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/lightbulb-on-outline-dark.svg"><img src="docs/images/icons/lightbulb-on-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>A light with transitions</b><br>Brightness keeps the mix, transition fades in gentle steps, switching on brings back the last mix instead of 100 % white.</td></tr>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/calendar-clock-dark.svg"><img src="docs/images/icons/calendar-clock-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Schedules in the lamp</b><br>Daily curves and weekday schedules are written to the lamp, which then runs them by itself, even without Home Assistant.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/weather-sunset-dark.svg"><img src="docs/images/icons/weather-sunset-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Sun, feeding, acclimatization</b><br>A schedule after the real sun, a feeding light button and a dimmed start for new tanks.</td></tr>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/eyedropper-dark.svg"><img src="docs/images/icons/eyedropper-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Dosing pump</b><br>Dose, calibrate and program 1 to 8 channels. Counters from the pump, container level and a push when it runs low.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/shield-check-outline-dark.svg"><img src="docs/images/icons/shield-check-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Never doses twice</b><br>A dose is never repeated automatically: rather an error message than a double dose.</td></tr>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/rocket-launch-outline-dark.svg"><img src="docs/images/icons/rocket-launch-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Never blocks the start</b><br>First contact runs in the background after Home Assistant has started.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/bluetooth-connect-dark.svg"><img src="docs/images/icons/bluetooth-connect-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Kind to Bluetooth proxies</b><br>One connection at a time, a hard time limit and disconnect after 15 seconds idle, so other devices get their slot.</td></tr>
-</table>
-<!-- /cards:features -->
-
-**Lamps**
-- Every channel of the lamp **from 0 to 100 %** as a slider and with `chihiros.set_channels`, like in the app.
-- One light per lamp: **brightness** (white and two-channel lamps, the mix is kept), **RGB** or **RGBW**, with real **transitions**; switching on without values brings back the last mix.
-- **Auto mode:** the lamp plays its stored daily schedule by itself, even without Home Assistant.
-- **Write a daily schedule** (`chihiros.set_auto_curve`): points with time and channel levels, the lamp fades between them.
-- **Weekday schedules** (`chihiros.set_weekday_schedule`): up to 7 settings with sunrise, sunset, ramp and weekdays, like in the app. Lite controllers only know one setting for every day.
-- **Scenes like in the app** (RGB lamps): red plants, green, Buce, fish, shrimp, all, or back to the schedule.
-- **Feeding light:** a button makes the light bright for 1 to 120 minutes and then returns to the previous state.
-- **Sun cycle:** a schedule after the real sunrise and sunset, limited to "earliest on" and "latest off", recalculated every night.
-- **Acclimatization:** a new tank starts dimmed (10 to 100 %) and reaches full brightness after 1 to 12 weeks.
-- **After a power cut** Home Assistant sets the clock and, in manual mode, the colour again.
-- **WRGB VIVID III:** fan with speed (25 to 100 %) or automatic by temperature, fan speed and temperature sensors.
-
-**Dosing pump**
-- Button and dose volume per channel, service `chihiros.dose`. A dose is **never repeated automatically**.
-- Counters **today** and **total** from the pump (every 30 minutes and after every dose) plus Home Assistant's own counters.
-- **Calibrate** (`chihiros.calibrate_pump`), **dosing program** (`chihiros.set_dosing_program`, the pump then doses by itself), clear the program, reset counters.
-- Per channel **pump active** and **catch up missed doses**, plus the pump's **dosing delay**.
-- **Container level:** enter the container size, press "container refilled" after refilling, get the remaining volume and how many days it lasts. Optional **push message** when a container runs low, and a repair issue below 10 %.
-
-**Both**
-- **Never blocks the start of Home Assistant:** the first contact runs in the background.
-- **Kind to Bluetooth proxies:** one connection at a time, a hard time limit, disconnect after 15 seconds idle.
-- Diagnostics: reachable (with the last error), signal strength, last contact, firmware, diagnostics download.
-- English and German.
-
+<a id="supported-devices"></a>
 ## Supported devices
 
-The model is detected from the Bluetooth name; Home Assistant discovers the devices by itself.
+The model is detected from the Bluetooth name, and Home Assistant discovers the devices by itself.
 
 | Device | Bluetooth name starts with | Channels | Tested on hardware |
-|---|---|---|---|
-| C II RGB | `DYNCRGP`, `DYNCRGB` | red, green, blue | **yes** |
-| Dosing pump, 1 to 8 channels | `DYDOSE` | | **yes** (4 channels) |
-| A II | `DYNA2`, `DYNA2N` | white | no |
-| WRGB II | `DYWRGB`, `DYNT90`, `DYNW30`, `DYNW45`, `DYNW60`, `DYNW90`, `DYNW12P`, `DYNWRGB` | red, green, blue | no |
-| WRGB II Pro | `DYWPRO30` … `DYWPRO90`, `DYWPR120` | red, green, blue, white | no |
-| WRGB II Slim | `DYSILN`, `DYSL30` … `DYSL120`, `DYSL12` | red, green, blue | no |
-| WRGB VIVID III | `DYVVD3` | red, green, blue, white + fan | no |
-| Universal WRGB | `DYU550` … `DYU1500` | red, green, blue, white | no |
-| SEA_LED | `DYSEA` | red, green, blue, white | no |
-| Tiny Terrarium Egg | `DYDD` | red, green | no |
-| Z Light TINY | `DYSSD`, `DYZSD` | white, warm white | no |
-| Commander 1 | `DYCOM` | white, RGB or WRGB (chosen during setup) | no |
-| Commander 4 | `DYLED`, `DYNLED` | red, green, blue, white | no |
-| Commander X | `DYONE` | white | no |
+|:--|:--|:--|:--:|
+| C II RGB | `DYNCRGP`, `DYNCRGB` | red, green, blue | ✓ |
+| Dosing pump, 1 to 8 channels | `DYDOSE` | | ✓ (4 channels) |
+| A II | `DYNA2`, `DYNA2N` | white | |
+| WRGB II | `DYWRGB`, `DYNT90`, `DYNW30`, `DYNW45`, `DYNW60`, `DYNW90`, `DYNW12P`, `DYNWRGB` | red, green, blue | |
+| WRGB II Pro | `DYWPRO30` … `DYWPRO90`, `DYWPR120` | red, green, blue, white | |
+| WRGB II Slim | `DYSILN`, `DYSL30` … `DYSL120`, `DYSL12` | red, green, blue | |
+| WRGB VIVID III | `DYVVD3` | red, green, blue, white + fan | |
+| Universal WRGB | `DYU550` … `DYU1500` | red, green, blue, white | |
+| SEA_LED | `DYSEA` | red, green, blue, white | |
+| Tiny Terrarium Egg | `DYDD` | red, green | |
+| Z Light TINY | `DYSSD`, `DYZSD` | white, warm white | |
+| Commander 1 | `DYCOM` | white, RGB or WRGB (chosen during setup) | |
+| Commander 4 | `DYLED`, `DYNLED` | red, green, blue, white | |
+| Commander X | `DYONE` | white | |
 
-Lamps marked "no" speak the same protocol as the tested C II RGB and should work. They are built from the protocol documentation of the original integration but **not tested on hardware** yet. If you own one, please [report](https://github.com/SH1FT-W/chihiros/issues/new?template=bug.yml) whether it works, with the model and the Bluetooth name.
+The untested lamps speak the same protocol as the C II RGB and are built from the protocol documentation of the original integration. Own one? Please [report](https://github.com/SH1FT-W/chihiros/issues/new?template=bug.yml) whether it works, with the model and the Bluetooth name. Heaters (`DYHET`, `DYH1T`) and magnetic stirrers (`DYMIXR`) are left out on purpose; for those, use the original integration instead.
 
-**Not supported:** Chihiros heaters (`DYHET`, `DYH1T`) and magnetic stirrers (`DYMIXR`) are left out on purpose. For those, use the [original integration](https://github.com/TheMicDiet/chihiros-led-control) (not at the same time as this one).
+**New in 26.11:** the container level keeps counting after a totals reset, and discovery ignores ghost devices from Bluetooth proxies. Every change is in the [changelog](CHANGELOG.md).
 
+<a id="install"></a>
+## Install
+
+[![Open in the Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=SH1FT-W&repository=chihiros&category=integration)
+
+Search for **Chihiros** under **Settings > Marketplace** (called HACS before Home Assistant 2026.11), download it and restart Home Assistant.
+
+<details>
+<summary>Install by hand</summary>
+
+1. Download the [latest release](https://github.com/SH1FT-W/chihiros/releases/latest).
+2. Copy `custom_components/chihiros` into `/config/custom_components/` and restart Home Assistant.
+
+</details>
+
+<a id="set-up"></a>
+## Set up
+
+Before you start, you need a connectable Bluetooth adapter or an ESPHome Bluetooth proxy in range of the device, with a free connection slot. Close the My Chihiros app: the device takes only one connection.
+
+1. **Add the device.** Devices in range show up under **Settings > Devices & services > Discovered**.
+2. **Answer the one question.** For the dosing pump, the number of pump channels (1 to 8, default 4). For a Commander 1, the connected lamp (white, RGB or WRGB). Other devices need nothing.
+3. **Low container push, if you like.** Under **Configure** on the pump.
+
+The pump channel count can be changed later with **three dots > Reconfigure**; entities of channels no longer used are removed.
+
+<a id="switching"></a>
+### Switching from the original integration
+
+1. **Remove "chihiros" by TheMicDiet** in the Marketplace. Keep the integration entries.
+2. **Install this integration** and restart Home Assistant. Existing entries, entities, history and automations are taken over.
+
+Two old entities stay behind as "no longer provided" (`…_last_notification` and `…_calibrate_pump`); calibrating now works with `chihiros.calibrate_pump`.
+
+<a id="entities"></a>
 ## Entities
 
-<!-- cards:entities -->
-<table>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/lightbulb-outline-dark.svg"><img src="docs/images/icons/lightbulb-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Light</b><br>One light per lamp: brightness, RGB or RGBW with transition. Attribute channels shows every channel in %.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/tune-variant-dark.svg"><img src="docs/images/icons/tune-variant-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Channel numbers</b><br>red, green, blue, white or warm per model, plus feeding light duration, sun ramp and acclimatization.</td></tr>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/toggle-switch-outline-dark.svg"><img src="docs/images/icons/toggle-switch-outline-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Switches and select</b><br>auto_mode, sun cycle and acclimatization, scene (RGB lamps), sun earliest and latest as times.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/fan-dark.svg"><img src="docs/images/icons/fan-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Fan (VIVID III)</b><br>fan with speed and automatic mode, fan_rpm and fan_temperature_celsius.</td></tr>
-<tr><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/eyedropper-dark.svg"><img src="docs/images/icons/eyedropper-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Dosing pump</b><br>Per channel: dose button and volume, today, total, remaining, lasts, program, active and catch up switches.</td><td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/stethoscope-dark.svg"><img src="docs/images/icons/stethoscope-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Diagnostics</b><br>reachable with the last error, signal strength, last contact, firmware and a diagnostics download.</td></tr>
-</table>
-<!-- /cards:entities -->
+Entity IDs start with the device name, for new devices the Bluetooth name (for example `light.dyncrgp…`). Names are in English and German.
 
-Entity IDs start with the device name, for new devices the Bluetooth name (for example `light.dyncrgp…`). After switching from the original integration the existing IDs stay.
+| Lamp | Shows |
+|:--|:--|
+| Light | Brightness, RGB or RGBW as the lamp has them, with `transition`. Brightness keeps the mix, switching on brings back the last mix. Attribute `channels` in %. |
+| Red, Green, Blue, White, Warm white | One slider per channel of the model, 0 to 100 %, like in the app |
+| Auto mode | The lamp plays its stored daily schedule by itself, even without Home Assistant |
+| Scene | Red plants, green, Buce, fish, shrimp, all, or back to the schedule (RGB lamps) |
+| Feeding light | Bright for 1 to 120 minutes (Feeding light duration), then back to the previous state |
+| Sun cycle | Schedule after the real sunrise and sunset, within Sun cycle earliest on and latest off, recalculated every night |
+| Acclimatization | A new tank starts dimmed (10 to 100 %) and reaches full brightness after 1 to 12 weeks |
+
+| Dosing pump, per channel | Shows |
+|:--|:--|
+| Dose pump, Dose volume | Dose now with the set volume |
+| Today, Total | Counters from the pump, every 30 minutes and after every dose |
+| Container size, Container refilled, Remaining, Lasts | Container level and how many days it lasts. Push when it runs low, repair notice below 10 %. |
+| Program | The dosing program the pump runs by itself |
+| Active, Catch up missed doses | Per channel, plus the pump's Dosing delay |
+
+<details>
+<summary>Fan, Home Assistant counters and diagnostics</summary>
+
+| Entity | Shows |
+|:--|:--|
+| Fan, Fan speed, Temperature | WRGB VIVID III: speed 25 to 100 % or automatic by temperature. Updated whenever Home Assistant talks to the lamp, at least once an hour. |
+| Daily schedule | Points of the schedule written to the lamp |
+| Feeding light until | End of the feeding light |
+| Pump today via HA, total via HA, doses via HA, last calibrated | Home Assistant's own pump counters |
+| Reachable | Diagnostic, with `last_error`, `connects` and `failures` |
+| Signal strength, Last contact, Firmware | Diagnostic |
+
+</details>
 
 ## Examples
 
+Channels like in the app (only the channels the lamp has; missing ones stay):
+
 ```yaml
-# Channels like in the app (only the channels the lamp has)
 action: chihiros.set_channels
 target:
   entity_id: light.my_lamp
 data: {red: 70, green: 70, blue: 70, white: 40, transition: 600}
 ```
 
+<details>
+<summary>Daily schedule in the lamp, it runs it by itself afterwards</summary>
+
 ```yaml
-# Daily schedule in the lamp, it runs it by itself afterwards
 action: chihiros.set_auto_curve
 target:
   entity_id: light.my_lamp
@@ -142,19 +142,26 @@ data:
     - {time: "19:30", red: 0, green: 0, blue: 0}
 ```
 
+</details>
+
+<details>
+<summary>Daily dosing program: channel 1, 08:00 and 20:00, 1.5 ml each</summary>
+
 ```yaml
-# Daily dosing program: channel 1, 08:00 and 20:00, 1.5 ml each
 action: chihiros.set_dosing_program
 data: {device_id: <dosing pump>, pump: 1, times: ["08:00", "20:00"], ml: 1.5}
 ```
 
-## Actions
+</details>
+
+<details>
+<summary>All actions</summary>
 
 | Action | Target | Main fields |
-|---|---|---|
+|:--|:--|:--|
 | `chihiros.set_channels` | light entity | `red`, `green`, `blue`, `white`, `warm` (0 to 100 %, missing ones stay), `transition` (s) |
 | `chihiros.set_auto_curve` | light entity | `points` (2 to 16 × `time` + channels), `activate` |
-| `chihiros.set_weekday_schedule` | light entity | `settings` (up to 7 × `weekdays`, `sunrise`, `sunset`, `ramp`, channels) |
+| `chihiros.set_weekday_schedule` | light entity | `settings` (up to 7 × `weekdays`, `sunrise`, `sunset`, `ramp`, channels); lite controllers only one setting for every day |
 | `chihiros.dose` | `device_id`, `pump` | `ml` (empty = the set dose volume) |
 | `chihiros.calibrate_pump` | `device_id`, `pump` | first `seconds` (test run), then `measured_ml` |
 | `chihiros.set_dosing_program` | `device_id`, `pump` | `mode` (`daily`/`once`/`timer`/`spread`), `times` + `ml` or `doses`, `weekdays`; for `spread` `start`, `duration`, `count`, `daily_ml` |
@@ -165,51 +172,21 @@ data: {device_id: <dosing pump>, pump: 1, times: ["08:00", "20:00"], ml: 1.5}
 
 If the device is not reachable or an input does not fit (for example channel 5 on a 4-channel pump or `white` on an RGB lamp), the action reports an error instead of silently doing nothing.
 
-## Installation
-
-### Marketplace
-
-The Marketplace is under Settings → Marketplace. On Home Assistant before 2026.11 it is still called HACS.
-
-Chihiros is in the Marketplace.
-
-[![Open in the Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=SH1FT-W&repository=chihiros&category=integration)
-
-1. In the Marketplace, search for **Chihiros** (or click **Open in the Marketplace** above), download it and restart Home Assistant.
-
-### Manual
-
-1. Download the [latest release](https://github.com/SH1FT-W/chihiros/releases/latest).
-2. Copy the folder `custom_components/chihiros` into `/config/custom_components/` and restart Home Assistant.
-
-Requires Home Assistant 2026.9 or newer and a connectable Bluetooth adapter or ESPHome Bluetooth proxy in range.
-
-## Setup
-
-Devices in range are discovered automatically (**Settings > Devices & services**). For the dosing pump the **number of pump channels** (1 to 8, default 4) is asked, for a Commander 1 the **connected lamp** (white, RGB or WRGB). The pump channel count can be changed later with **three dots > Reconfigure**; entities of channels no longer used are removed. The push message for low containers is set with **Configure** on the pump.
-
-## Switching from the original integration
-
-1. In the Marketplace, remove "chihiros" by TheMicDiet. Keep the integration entries.
-2. Install this integration (see above) and restart Home Assistant.
-3. Existing entries are taken over: entities, history and automations stay.
-
-Two old entities remain as "no longer provided" (`…_last_notification` and `…_calibrate_pump`); calibrating now works with `chihiros.calibrate_pump`.
+</details>
 
 ## Good to know
 
-- **The lamp does not report its colour.** Home Assistant shows its last command, in auto mode the stored schedule. If the lamp is changed with the app or the remote, Home Assistant shows its own state until it sends something again.
+- **Doses are never repeated.** If the connection breaks during a dose, an error appears: check the counter to see whether it dosed.
+- **The lamp does not report its colour.** Home Assistant shows its last command, in auto mode the stored schedule. After a change in the app or with the remote, it shows its own state until it sends something again. After a power cut it sets the clock and, in manual mode, the colour again.
+- **One connection at a time, kind to proxies.** Commands to the same device wait for each other, one operation takes at most 40 seconds, and the connection closes after 15 seconds idle. Home Assistant's start is never blocked; the first contact runs in the background.
 - **Reachability** comes from the Bluetooth advertisements: if no proxy sees the device, its entities become unavailable.
-- **Checking a written schedule** works only on lamps of the newer (SeaLed) family, up to 8 points and on the first channel; older lamps (Commander X, Commander 1, Commander 4 `DYLED`, WRGB II `DYWRGB`, Terrarium Egg, Z Light TINY) store schedule points in 30-minute steps, like the app.
-- **One connection at a time.** Commands to the same device wait for each other; one operation takes at most 40 seconds.
-- **Dosing is never repeated.** If the connection breaks during a dose, an error appears: check the counter to see whether it dosed.
-- The fan values of the VIVID III are updated whenever Home Assistant talks to the lamp (at least once an hour).
+- **Older lamps** (Commander X, Commander 1, Commander 4 `DYLED`, WRGB II `DYWRGB`, Terrarium Egg, Z Light TINY) store schedule points in 30-minute steps, like the app. Checking a written schedule works only on the newer SeaLed family, up to 8 points and on the first channel.
 
-## Troubleshooting
+<details>
+<summary>Troubleshooting</summary>
 
 - **Entities "unavailable"** (only "reachable" stays, showing "disconnected"). No Bluetooth proxy sees the device: check power, move a proxy closer or free connection slots on it.
-- **Action reports "not reachable".** The reason is in the message and in the "reachable" sensor (attribute `last_error`, plus `connects`/`failures`). Typical: all connection slots of the proxy are in use, or the app still holds the device.
-- **Diagnostics:** **Settings > Devices & services > Chihiros > three dots > Download diagnostics**, with connection statistics, stored state and the last events, without the Bluetooth address.
+- **Action reports "not reachable".** The reason is in the message and in the "reachable" sensor. Typical: all connection slots of the proxy are in use, or the app still holds the device.
 - **Raw commands:** `chihiros.send_raw` sends commands unchanged and returns the replies.
 - **Debug log:**
 
@@ -219,24 +196,33 @@ Two old entities remain as "no longer provided" (`…_last_notification` and `�
       custom_components.chihiros: debug
   ```
 
-When you open an [issue](https://github.com/SH1FT-W/chihiros/issues), please attach the diagnostics file and name the model and the Bluetooth name.
+When you open an [issue](https://github.com/SH1FT-W/chihiros/issues), attach the diagnostics (**Settings > Devices & services > Chihiros > three dots > Download diagnostics**: connection statistics, stored state and the last events, without the Bluetooth address) and name the model and the Bluetooth name.
 
-## Removal
+</details>
+
+<details>
+<summary>Remove</summary>
 
 1. **Settings > Devices & services > Chihiros > three dots > Delete** (per device). The schedule or dosing program stays stored in the device and keeps running.
-2. Delete the folder `/config/custom_components/chihiros` (or remove the repository in the Marketplace) and restart Home Assistant.
+2. Remove the repository in the Marketplace (or delete `/config/custom_components/chihiros`) and restart Home Assistant.
 
-## How it works
+</details>
 
-<!-- cards:how -->
-<table>
-<tr><td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/bluetooth-dark.svg"><img src="docs/images/icons/bluetooth-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>One connection</b><br>Over Home Assistant's Bluetooth or ESPHome proxies, a lock per device, disconnected after 15 seconds idle.</td><td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/swap-horizontal-dark.svg"><img src="docs/images/icons/swap-horizontal-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>The app's frames</b><br>Channel levels, modes, schedule points and dosing commands, exactly as the My Chihiros app sends them.</td><td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/icons/history-dark.svg"><img src="docs/images/icons/history-light.svg" width="22" height="22" align="absmiddle" alt=""></picture> <b>Remembers what you set</b><br>The lamp does not report its colour. Home Assistant keeps the last state and restores it after a power cut.</td></tr>
-</table>
-<!-- /cards:how -->
+<details>
+<summary>How it works</summary>
+
+| Part | What it does |
+|:--|:--|
+| One connection | Over Home Assistant's Bluetooth or ESPHome proxies, a lock per device, a hard time limit, disconnected after 15 seconds idle |
+| The app's frames | Channel levels, modes, schedule points and dosing commands, as the My Chihiros app sends them |
+| Remembered state | The lamp does not report its colour, so Home Assistant keeps the last state and restores it after a power cut |
 
 The Bluetooth protocol and the model table follow the documentation of [TheMicDiet/chihiros-led-control](https://github.com/TheMicDiet/chihiros-led-control) (MIT), which decoded the "My Chihiros" app and checked it with captures; thanks for the groundwork. Details are in [`NOTICE`](NOTICE) and, in German, in [`CLAUDE.md`](CLAUDE.md).
 
-## Development
+</details>
+
+<details>
+<summary>Development</summary>
 
 ```bash
 .venv/bin/python -m pytest -q -p no:logging --cov=custom_components/chihiros   # fake devices in tests/conftest.py
@@ -245,8 +231,12 @@ uvx mypy@2.3.1 --python-executable .venv/bin/python
 .venv/bin/python tools/pruefe-uebersetzungen.py    # strings.json against translations/*.json
 ```
 
-Install the test requirements with `pip install -r requirements_test.txt`. The tests replace Bluetooth completely with simulated devices. The same checks run on GitHub Actions for every push and pull request, plus HACS validation and hassfest. Self-assessed state of the [Integration Quality Scale](https://developers.home-assistant.io/docs/core/integration-quality-scale/): [`quality_scale.yaml`](custom_components/chihiros/quality_scale.yaml).
+Test requirements: `pip install -r requirements_test.txt`. The tests replace Bluetooth completely with simulated devices. GitHub Actions runs the same checks plus HACS validation and hassfest. Quality scale: platinum, [self-assessed](custom_components/chihiros/quality_scale.yaml).
+
+</details>
 
 ## License
 
-[Apache License 2.0](LICENSE), Copyright 2026 SH1FT-W. See [`NOTICE`](NOTICE) for acknowledgements, the license of the original integration and trademarks.
+[Apache License 2.0](LICENSE), Copyright 2026 SH1FT-W. Acknowledgements and the license of the original integration in [`NOTICE`](NOTICE).
+
+<sub>Chihiros (this integration) is an independent project, not affiliated with, endorsed or sponsored by Chihiros. Chihiros is a trademark of its owner.</sub>
