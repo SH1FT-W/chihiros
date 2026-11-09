@@ -48,7 +48,7 @@ Versionszeile der Projektseite (`docs/index.html`) lesen die manifest.json selbs
   Push/PR auf main plus hassfest, montags zusätzlich gegen die neueste HA; Abdeckungsgrenze 96 %.
   Pakete der CI in `requirements_test.txt` (HA 2026.9.3 + Bluetooth-Pakete). `.github/workflows/hacs.yml`: HACS-Validierung.
 - `tools/next-version` und `tools/pruefe-uebersetzungen.py` sind byteidentische Kopien der Vorlagen.
-- README-Bilder aus `docs/readme-images.json` mit `theme/v1/readme-images/render.mjs <repo>` aus sh1ft-w.github.io:
-  Titel `docs/images/readme-title-{light,dark}.webp` (2560 × 1280, Fenster zeigt `docs/images/title-shot-*.png` =
-  Funktionsblock der Projektseite, 2× aufgenommen) plus `readme-title-social.png` für die GitHub-Vorschau; README-Aufbau nach `repo-vorlagen/readme-muster.md`, ohne Kartentabellen. Die Projektseite zeigt das
-  Titelbild im Hero.
+- README-Bilder aus `docs/readme-images.json` mit `theme/v2/readme-images/render.mjs <repo>` aus sh1ft-w.github.io:
+  Titel-Banner `docs/images/readme-title-{light,dark}.webp` (2560 × 880) plus `readme-title-social.png` (1280 × 640) für die
+  GitHub-Vorschau, aus `title.name`, `title.line` und drei `title.lanes`. README- und Seitenaufbau nach
+  `repo-vorlagen/readme-muster.md` (Design v2: Hero mit den drei Bahnen, kein Titelbild im Hero).

@@ -2,14 +2,14 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-title-dark.webp" />
-  <img src="docs/images/readme-title-light.webp" alt="Chihiros: Your Chihiros lamps, steady over Bluetooth." />
+  <img src="docs/images/readme-title-light.webp" alt="Chihiros: Chihiros lights and dosing pump, fully local. Local Bluetooth. Every channel. Schedules and doses." />
 </picture>
 
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FSH1FT-W%2Fchihiros%2Fmain%2Fcustom_components%2Fchihiros%2Fmanifest.json&query=%24.version&label=version&style=flat-square&color=e60012&labelColor=111111)](https://github.com/SH1FT-W/chihiros/releases/latest)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.9%2B-e60012?style=flat-square&labelColor=111111&logo=homeassistant&logoColor=white)](https://www.home-assistant.io)
 [![Marketplace](https://img.shields.io/badge/Marketplace-default-e60012?style=flat-square&labelColor=111111)](https://hacs.xyz)
 
-<a href="https://sh1ft-w.github.io/chihiros"><b>Website</b></a>&emsp;<a href="#supported-devices">Devices</a>&emsp;<a href="#install">Install</a>&emsp;<a href="#set-up">Set up</a>&emsp;<a href="#entities">Entities</a>&emsp;<a href="CHANGELOG.md">Changelog</a>
+<a href="https://sh1ft-w.github.io/chihiros"><b>Website</b></a>&emsp;<a href="#get-started">Get started</a>&emsp;<a href="#supported-devices">Devices</a>&emsp;<a href="#entities">Entities</a>&emsp;<a href="CHANGELOG.md">Changelog</a>
 
 </div>
 
@@ -45,12 +45,19 @@ The untested lamps speak the same protocol as the C II RGB and are built from th
 
 **New in 26.11:** the container level keeps counting after a totals reset, and discovery ignores ghost devices from Bluetooth proxies. Every change is in the [changelog](CHANGELOG.md).
 
-<a id="install"></a>
-## Install
+<a id="get-started"></a><a id="install"></a><a id="set-up"></a>
+## Get started
 
 [![Open in the Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=SH1FT-W&repository=chihiros&category=integration)
 
-Search for **Chihiros** under **Settings > Marketplace** (called HACS before Home Assistant 2026.11), download it and restart Home Assistant.
+Before you start, you need a connectable Bluetooth adapter or an ESPHome Bluetooth proxy in range of the device, with a free connection slot. Close the My Chihiros app: the device takes only one connection.
+
+1. **Install it.** Search for **Chihiros** under **Settings > Marketplace** (called HACS before Home Assistant 2026.11), download it and restart Home Assistant.
+2. **Add the device.** Devices in range show up under **Settings > Devices & services > Discovered**.
+3. **Answer the one question.** For the dosing pump, the number of pump channels (1 to 8, default 4). For a Commander 1, the connected lamp (white, RGB or WRGB). Other devices need nothing.
+4. **Low container push, if you like.** Under **Configure** on the pump.
+
+The pump channel count can be changed later with **three dots > Reconfigure**; entities of channels no longer used are removed.
 
 <details>
 <summary>Install by hand</summary>
@@ -59,17 +66,6 @@ Search for **Chihiros** under **Settings > Marketplace** (called HACS before Hom
 2. Copy `custom_components/chihiros` into `/config/custom_components/` and restart Home Assistant.
 
 </details>
-
-<a id="set-up"></a>
-## Set up
-
-Before you start, you need a connectable Bluetooth adapter or an ESPHome Bluetooth proxy in range of the device, with a free connection slot. Close the My Chihiros app: the device takes only one connection.
-
-1. **Add the device.** Devices in range show up under **Settings > Devices & services > Discovered**.
-2. **Answer the one question.** For the dosing pump, the number of pump channels (1 to 8, default 4). For a Commander 1, the connected lamp (white, RGB or WRGB). Other devices need nothing.
-3. **Low container push, if you like.** Under **Configure** on the pump.
-
-The pump channel count can be changed later with **three dots > Reconfigure**; entities of channels no longer used are removed.
 
 <a id="switching"></a>
 ### Switching from the original integration
@@ -240,3 +236,11 @@ Test requirements: `pip install -r requirements_test.txt`. The tests replace Blu
 [Apache License 2.0](LICENSE), Copyright 2026 SH1FT-W. Acknowledgements and the license of the original integration in [`NOTICE`](NOTICE).
 
 <sub>Chihiros (this integration) is an independent project, not affiliated with, endorsed or sponsored by Chihiros. Chihiros is a trademark of its owner.</sub>
+
+<br/>
+
+<div align="center">
+<a href="https://sh1ft-w.github.io"><img src="https://sh1ft-w.github.io/readme/footer.png" width="640" alt="All SH1FT-W projects"></a>
+<br/>
+<sub>More open source for Home Assistant and the Mac at <a href="https://sh1ft-w.github.io">sh1ft-w.github.io</a></sub>
+</div>

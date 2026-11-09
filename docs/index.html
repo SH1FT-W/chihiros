@@ -13,32 +13,30 @@
 <meta property="og:description" content="Chihiros LED lamps and the dosing pump in Home Assistant, steady over Bluetooth proxies.">
 <meta property="og:image" content="https://sh1ft-w.github.io/chihiros/images/readme-title-social.png">
 <link rel="icon" href="logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Shared SH1FT-W design (tokens, glass navigation, light/dark, DE/EN, reveal) -->
-<link rel="stylesheet" href="https://sh1ft-w.github.io/theme/v1/theme.css">
-<script src="https://sh1ft-w.github.io/theme/v1/theme.js"></script>
+<!-- Shared SH1FT-W design, version 2 (tokens, Archivo, navigation, light/dark, DE/EN, the lanes) -->
+<link rel="stylesheet" href="https://sh1ft-w.github.io/theme/v2/theme.css">
+<script src="https://sh1ft-w.github.io/theme/v2/theme.js"></script>
 <style>
 /* Chihiros-Palette: warmes Weiß bei Tag, dunkles Rot bei Nacht, Akzent im Chihiros-Rot #e60012 */
 :root {
   --accent: #e60012; --accent-ink: #b8000e; --on-accent: #ffffff;
-  --sea: #e60012; --sea-tint: rgba(230,0,18,0.09); --sea-glow: rgba(230,0,18,0.30); --aqua: #FF4D57;
+  --sea: #e60012; --sea-tint: rgba(230,0,18,0.09); --aqua: #FF4D57;
   --ch-w: #8FA3B1; --ch-b: #2F7FD8; --ch-g: #2FA36A; --ch-r: #E0584A;
-  --font: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --display: "Archivo", "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font: "Archivo", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --display: "Archivo", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --lane-a: #E60012; --lane-b: #FF4D57;
   --bg: #FAF5F4; --bg-2: #F2E8E6; --card: #FFFFFF; --card-2: #F8F1F0;
   --ink: #1E1012; --ink-2: #5E4B4D; --ink-3: rgba(30,16,18,0.52);
   --line: rgba(60,10,15,0.11); --chip: rgba(80,10,15,0.06);
   --glass: rgba(255,251,250,0.72); --glass-line: rgba(255,255,255,0.75);
   --shadow: 0 1px 2px rgba(5,30,50,0.05), 0 12px 32px -14px rgba(5,30,50,0.22);
   --shadow-lg: 0 2px 6px rgba(5,30,50,0.05), 0 48px 100px -36px rgba(5,30,50,0.40);
-  --radius: 26px; --radius-lg: 36px;
+  --radius: 20px; --radius-lg: 28px; --max: 1200px;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --accent: #FF4D57; --accent-ink: #FF7A80; --on-accent: #1A0406;
-  --sea: #FF4D57; --sea-tint: rgba(255,77,87,0.14); --sea-glow: rgba(255,77,87,0.28);
+  --sea: #FF4D57; --sea-tint: rgba(255,77,87,0.14);
   --ch-w: #DCE6EC;
   --bg: #140809; --bg-2: #1D0D0F; --card: #241214; --card-2: #2E181B;
   --ink: #F7ECEC; --ink-2: rgba(240,220,222,0.84); --ink-3: rgba(240,220,222,0.52);
@@ -48,7 +46,7 @@
 } }
 :root[data-theme="dark"] {
   --accent: #FF4D57; --accent-ink: #FF7A80; --on-accent: #1A0406;
-  --sea: #FF4D57; --sea-tint: rgba(255,77,87,0.14); --sea-glow: rgba(255,77,87,0.28);
+  --sea: #FF4D57; --sea-tint: rgba(255,77,87,0.14);
   --ch-w: #DCE6EC;
   --bg: #140809; --bg-2: #1D0D0F; --card: #241214; --card-2: #2E181B;
   --ink: #F7ECEC; --ink-2: rgba(240,220,222,0.84); --ink-3: rgba(240,220,222,0.52);
@@ -64,58 +62,53 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .narrow { max-width: 780px; }
 p { margin: 0; }
 .muted { color: var(--ink-2); }
-.center { text-align: center; }
-.center .lead { margin-left: auto; margin-right: auto; max-width: 680px; }
+.center { text-align: left; }
+.center .lead { max-width: 680px; }
 code, .k { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .brand { font-family: var(--display); font-weight: 800; }
 .brand img { border-radius: 8px; }
 
 /* Knöpfe */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border-radius: 12px;
   font-family: inherit; font-size: 15px; font-weight: 600; line-height: 1; background: var(--sea); color: var(--on-accent); border: 0; cursor: pointer;
-  box-shadow: 0 12px 28px -12px var(--sea-glow); transition: transform .2s ease, filter .2s ease;
+  transition: transform .2s ease, filter .2s ease;
 }
 .btn:hover { text-decoration: none; filter: brightness(1.1); transform: translateY(-1px); }
-.btn.ghost { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+.btn.ghost { background: var(--chip); color: var(--ink); }
 .btn.small { height: 36px; padding: 0 16px; font-size: 14px; }
 
 /* Schrift */
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 18px; }
-.eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--aqua); box-shadow: 0 0 0 4px var(--sea-tint); }
+.eyebrow { font-size: 16px; font-weight: 650; color: var(--accent-ink); margin: 0 0 12px; }
 h1, h2, h3 { margin: 0; color: var(--ink); font-family: var(--display); font-weight: 800; text-wrap: balance; }
-h1 { font-size: clamp(44px, 8vw, 100px); line-height: 0.96; letter-spacing: -0.04em; font-weight: 900; }
-h1 em, h2 em { font-style: normal; color: var(--accent-ink); }
-h2 { font-size: clamp(34px, 5vw, 60px); line-height: 1.03; letter-spacing: -0.035em; }
-h3 { font-size: 20px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 700; }
+h1 { font-size: clamp(44px, 6vw, 84px); line-height: 1; font-weight: 800; font-stretch: 118%; font-style: italic; letter-spacing: -0.025em; }
+h1 em, h2 em { font-style: inherit; color: inherit; }
+h2 { font-size: clamp(30px, 3.8vw, 48px); line-height: 1.08; font-weight: 750; font-stretch: 112%; letter-spacing: -0.02em; }
+h3 { font-size: 20px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 700; font-stretch: 106%; }
 .lead { font-size: clamp(18px, 2vw, 22px); line-height: 1.5; color: var(--ink-2); margin: 22px 0 0; }
 .lead strong { color: var(--ink); font-weight: 600; }
 
 section { padding: clamp(72px, 9vw, 120px) 0; position: relative; }
 section.tint { background: var(--bg-2); }
-.head { margin-bottom: clamp(36px, 5vw, 60px); }
-.cap { margin-top: 20px; font-size: 15px; color: var(--ink-3); text-align: center; }
+.head { margin-bottom: clamp(36px, 5vw, 60px); max-width: 50em; }
+.cap { margin-top: 20px; font-size: 15px; color: var(--ink-3); }
 
-/* Hero */
-.hero { padding: clamp(56px, 9vw, 112px) 0 clamp(64px, 8vw, 104px); text-align: center; overflow: hidden; }
-.hero .glow { position: absolute; inset: -20% -10% auto; height: 90%; pointer-events: none;
-  background: radial-gradient(40% 36% at 30% 30%, rgba(230,0,18,0.16), transparent 70%), radial-gradient(36% 34% at 72% 24%, rgba(120,0,10,0.12), transparent 70%);
-  filter: blur(50px); }
-.hero .wrap { position: relative; }
-.hero .lead { max-width: 660px; margin-left: auto; margin-right: auto; }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 34px; }
-.meta { margin-top: 22px; font-size: 14px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-weight: 600; color: var(--ink-2); font-size: 13px; }
+/* Hero: text left, the lanes right */
+.hero { padding: clamp(48px, 7vw, 96px) 0 clamp(56px, 7vw, 96px); overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+.hero .mark { display: block; width: 64px; height: 64px; border-radius: 15px; margin-bottom: 26px; }
+.hero .lead { max-width: 34em; }
+.hero .s-lanes { margin-left: 32px; margin-right: calc(-1 * var(--gutter) - 14vw); }
+.s-track b { color: #fff; font: italic 800 clamp(20px, 2.5vw, 34px)/1 var(--font); font-stretch: 116%; letter-spacing: -0.015em; white-space: nowrap; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+.meta { margin-top: 22px; font-size: 14px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 8px; background: var(--chip); font-weight: 600; color: var(--ink-2); font-size: 13px; }
 .pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--aqua); display: inline-block; }
-
-/* Bühne: das README-Titelbild */
-.stage { position: relative; margin: clamp(48px, 7vw, 84px) auto 0; max-width: 1100px; }
-.stage .photo { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
 
 /* Bento: Gerade neu */
 .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-.b { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px 28px 28px; min-width: 0; }
-.b .tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); background: var(--sea-tint); padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
+.b { background: var(--card); border-radius: var(--radius); border: 1px solid var(--line); padding: 26px 28px 28px; min-width: 0; }
+.b .tag { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent-ink); background: var(--sea-tint); padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
 .b h3 { margin-bottom: 8px; }
 .b p { color: var(--ink-2); font-size: 16px; }
 .b code { font-size: 14px; background: var(--chip); padding: 2px 6px; border-radius: 6px; color: var(--ink); }
@@ -123,11 +116,11 @@ section.tint { background: var(--bg-2); }
 
 /* Funktionen */
 .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.tile { background: var(--card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); min-width: 0; }
+.tile { background: var(--card); border-radius: var(--radius); padding: 28px; border: 1px solid var(--line); min-width: 0; }
 .tile h3 { margin-bottom: 8px; }
 .tile p { color: var(--ink-2); font-size: 16px; }
 .tile code { font-size: 14px; background: var(--chip); padding: 2px 6px; border-radius: 6px; }
-.tile .ico { width: 46px; height: 46px; border-radius: 15px; background: var(--sea-tint); color: var(--accent-ink); display: grid; place-items: center; margin-bottom: 18px; }
+.tile .ico { width: 46px; height: 46px; border-radius: 10px; background: var(--sea-tint); color: var(--accent-ink); display: grid; place-items: center; margin-bottom: 18px; }
 .tile .ico svg { width: 23px; height: 23px; }
 
 /* Profil-Illustration */
@@ -136,7 +129,7 @@ section.tint { background: var(--bg-2); }
 .points li { display: grid; gap: 2px; }
 .points b { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--ink); }
 .points span { color: var(--ink-2); font-size: 16px; }
-.prof { background: var(--card); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: clamp(22px, 4vw, 36px); min-width: 0; }
+.prof { background: var(--card); border-radius: var(--radius-lg); border: 1px solid var(--line); padding: clamp(22px, 4vw, 36px); min-width: 0; }
 .prof-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .prof-head b { font-family: var(--display); font-size: 18px; }
 .days { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
@@ -154,16 +147,16 @@ section.tint { background: var(--bg-2); }
 .prof-foot b { font-weight: 600; font-size: 15px; }
 
 /* Entitäten-Tabelle */
-.tbl { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; font-size: 15px; }
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card); border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; font-size: 15px; }
 .tbl th, .tbl td { text-align: left; padding: 14px 18px; border-top: 1px solid var(--line); vertical-align: top; }
-.tbl thead th { border-top: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); background: var(--card-2); }
+.tbl thead th { border-top: 0; font-size: 13px; font-weight: 600; color: var(--accent-ink); background: var(--card-2); }
 .tbl td:first-child { font-weight: 600; white-space: nowrap; }
 .tbl code { font-size: 13px; background: var(--chip); padding: 2px 6px; border-radius: 6px; overflow-wrap: anywhere; }
 .tbl td:last-child { color: var(--ink-2); }
 
 /* Wie es funktioniert */
 .flow { display: grid; gap: 12px; max-width: 900px; margin: 0 auto; }
-.lane { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; background: var(--card); border-radius: 22px; box-shadow: var(--shadow); padding: 18px 22px; }
+.lane { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; background: var(--card); border-radius: 22px; border: 1px solid var(--line); padding: 18px 22px; }
 .lane .end b { display: block; font-family: var(--display); font-size: 16px; }
 .lane .end span { font-size: 14px; color: var(--ink-2); }
 .lane .end.r { text-align: right; }
@@ -172,12 +165,13 @@ section.tint { background: var(--bg-2); }
 
 /* Installation */
 .install { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
-.panel { background: var(--card); border-radius: var(--radius); padding: clamp(26px, 4vw, 42px); box-shadow: var(--shadow); min-width: 0; }
+.panel { background: var(--card); border-radius: var(--radius); padding: clamp(26px, 4vw, 42px); border: 1px solid var(--line); min-width: 0; }
 .panel h3 { margin-bottom: 6px; }
+.panel > .btn { margin-top: 22px; }
 .panel code { font-size: 14px; background: var(--chip); padding: 2px 6px; border-radius: 6px; overflow-wrap: anywhere; }
-.repo { margin-top: 10px; display: flex; align-items: center; gap: 8px; background: var(--chip); border-radius: 18px; padding: 8px 8px 8px 18px; }
+.repo { margin-top: 10px; display: flex; align-items: center; gap: 8px; background: var(--chip); border-radius: 12px; padding: 8px 8px 8px 18px; }
 .repo code { flex: 1; min-width: 0; font-size: 15px; background: none; padding: 0; color: var(--ink); overflow-wrap: anywhere; }
-.copy { flex: none; height: 34px; padding: 0 14px; border-radius: 999px; border: 0; background: var(--card); color: var(--ink); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.12); }
+.copy { flex: none; height: 34px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .steps { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 20px; counter-reset: s; }
 .steps li { position: relative; padding-left: 50px; color: var(--ink-2); }
 .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: -3px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--sea-tint); color: var(--accent-ink); font-weight: 700; font-size: 15px; }
@@ -186,14 +180,14 @@ section.tint { background: var(--bg-2); }
 .req li { display: flex; gap: 14px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); font-size: 16px; }
 .req li:first-child { border-top: 0; padding-top: 6px; }
 .req .name { color: var(--ink); font-weight: 600; flex: 1; min-width: 0; }
-.tg { flex: none; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--sea-tint); color: var(--accent-ink); }
+.tg { flex: none; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: var(--sea-tint); color: var(--accent-ink); }
 .tg.opt { background: var(--chip); color: var(--ink-3); }
 .note { margin-top: 20px; font-size: 14px; color: var(--ink-3); }
 .full { grid-column: 1 / -1; }
 
 /* FAQ */
 .faq { display: grid; gap: 10px; }
-.faq details { background: var(--card); border-radius: 20px; box-shadow: var(--shadow); padding: 0 22px; }
+.faq details { background: var(--card); border-radius: 20px; border: 1px solid var(--line); padding: 0 22px; }
 .faq summary { cursor: pointer; list-style: none; padding: 18px 0; font-family: var(--display); font-weight: 700; font-size: 17px; display: flex; gap: 12px; align-items: center; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: "+"; margin-left: auto; font-size: 22px; color: var(--accent-ink); font-weight: 600; }
@@ -217,7 +211,6 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  :root { --radius: 22px; --radius-lg: 28px; }
   .nav { padding: 0 8px 0 14px; }
   .nav .btn { margin-left: auto; }
   .grid3 { grid-template-columns: 1fr; }
@@ -239,6 +232,10 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
   .tbl td { border: 0; padding: 2px 0; }
   .tbl td:first-child { white-space: normal; }
 }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } .hero .s-lanes { margin: 8px calc(-1 * var(--gutter) - 8vw) 0 44px; } }
+/* Navigation links go before they push the button out of the bar */
+@media (max-width: 900px) { .nav-links { display: none; } .nav > .iconbtn { margin-left: auto; } .nav > .btn { margin-left: 0; } }
+@media (max-width: 400px) { .nav > .btn { display: none; } }
 </style>
 </head>
 <body>
@@ -264,25 +261,24 @@ footer .fine { flex-basis: 100%; line-height: 1.6; }
 </div>
 
 <section class="hero" id="top">
-  <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow reveal"><span class="en">Chihiros lamps and dosing pump in Home Assistant</span><span class="de">Chihiros-Lampen und Dosierpumpe in Home Assistant</span></p>
-    <h1 class="reveal d1"><span class="en">Your Chihiros lamps,<br><em>steady over Bluetooth.</em></span><span class="de">Deine Chihiros-Lampen,<br><em>stabil über Bluetooth.</em></span></h1>
-    <p class="lead reveal d2"><span class="en">Chihiros talks to Chihiros LED lamps and the dosing pump through Home Assistant's Bluetooth and ESPHome proxies: <strong>every channel as a slider, daily schedules written to the lamp, dosing that is never repeated</strong>. No app, no cloud.</span><span class="de">Chihiros spricht über das Bluetooth von Home Assistant und ESPHome-Proxys mit Chihiros-LED-Lampen und der Dosierpumpe: <strong>jeder Kanal ein Regler, Tagesabläufe direkt in der Lampe, Dosieren, das nie wiederholt wird</strong>. Ohne App, ohne Cloud.</span></p>
-    <div class="cta reveal d3">
-      <a class="btn" href="#install"><span class="en">Install from the Marketplace</span><span class="de">Über den Marketplace installieren</span></a>
-      <a class="btn ghost" href="https://github.com/SH1FT-W/chihiros#readme"><span class="en">Read the README</span><span class="de">Zur Anleitung</span></a>
+    <div>
+      <img class="mark" src="logo.png" alt="" width="64" height="64">
+      <h1><span class="en">Your Chihiros lamps, steady over Bluetooth.</span><span class="de">Deine Chihiros-Lampen, stabil über Bluetooth.</span></h1>
+      <p class="lead reveal d2"><span class="en">Chihiros talks to Chihiros LED lamps and the dosing pump through Home Assistant's Bluetooth and ESPHome proxies: <strong>every channel as a slider, daily schedules written to the lamp, dosing that is never repeated</strong>. No app, no cloud.</span><span class="de">Chihiros spricht über das Bluetooth von Home Assistant und ESPHome-Proxys mit Chihiros-LED-Lampen und der Dosierpumpe: <strong>jeder Kanal ein Regler, Tagesabläufe direkt in der Lampe, Dosieren, das nie wiederholt wird</strong>. Ohne App, ohne Cloud.</span></p>
+      <div class="cta reveal d3">
+        <a class="btn" href="#install"><span class="en">Install from the Marketplace</span><span class="de">Über den Marketplace installieren</span></a>
+        <a class="btn ghost" href="https://github.com/SH1FT-W/chihiros#readme"><span class="en">Read the README</span><span class="de">Zur Anleitung</span></a>
+      </div>
+      <p class="meta reveal d3">
+        <span class="pill"><i></i><span id="hl-version">Version 26.11.1</span></span>
+        <span class="en">Home Assistant 2026.9 or newer &middot; English and German &middot; Apache 2.0</span><span class="de">Home Assistant 2026.9 oder neuer &middot; Deutsch und Englisch &middot; Apache 2.0</span>
+      </p>
     </div>
-    <p class="meta reveal d3">
-      <span class="pill"><i></i><span id="hl-version">Version 26.11.1</span></span>
-      <span class="en">Home Assistant 2026.9 or newer &middot; English and German &middot; Apache 2.0</span><span class="de">Home Assistant 2026.9 oder neuer &middot; Deutsch und Englisch &middot; Apache 2.0</span>
-    </p>
-
-    <div class="stage reveal d3">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="images/readme-title-dark.webp">
-        <img class="photo" src="images/readme-title-light.webp" width="2560" height="1280" alt="Chihiros: Your Chihiros lamps, steady over Bluetooth.">
-      </picture>
+    <div class="s-lanes" aria-hidden="true">
+      <div class="s-lane"><div class="s-track"><b><span class="en">Local Bluetooth</span><span class="de">Lokales Bluetooth</span></b></div></div>
+      <div class="s-lane"><div class="s-track"><b><span class="en">Every channel</span><span class="de">Jeder Kanal</span></b></div></div>
+      <div class="s-lane"><div class="s-track"><b><span class="en">Schedules and doses</span><span class="de">Abläufe und Dosierung</span></b></div></div>
     </div>
   </div>
 </section>
