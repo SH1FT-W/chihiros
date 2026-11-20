@@ -434,6 +434,9 @@ class ChihirosLight(ChihirosDevice):
         if self.auto and self.lite and self.curve:
             # Lite-Controller starten ihr Auto-Programm nach Stromausfall erst mit neu geschriebenem Ablauf.
             work = self.async_set_curve(list(self.curve), activate=True)
+        elif self.auto and self.lite and self.weekday_settings:
+            # Same for a schedule written with set_weekday_schedule.
+            work = self.async_set_weekday_schedule(self.weekday_settings)
         elif self.auto:
             work = self.async_refresh()
         elif self.known:

@@ -130,6 +130,25 @@ async def test_a2_lite_curve_replayed_after_power_loss(hass: HomeAssistant, devi
     await hass.config_entries.async_unload(entry.entry_id)
 
 
+async def test_a2_lite_weekday_schedule_replayed_after_power_loss(
+    hass: HomeAssistant, devices: FakeDevices, bt, freezer
+):
+    name = "DYNA2N0011"
+    entry = await setup(hass, name)
+    week = {"sunrise": "09:00", "sunset": "19:00", "white": 60}
+    await call(hass, DOMAIN, "set_weekday_schedule", {"entity_id": "light.dyna2n0011", "settings": [week]})
+    freezer.tick(timedelta(minutes=5))
+    devices.clear()
+    bt.vanish(ADDR)
+    bt.advertise(ADDR)
+    await hass.async_block_till_done()
+    # Same as a curve: a Lite controller only runs its schedule after power loss when it is written again.
+    scene = [f for f in devices.frames(name) if f[0] == 0xA5 and f[5] == 25]
+    assert [list(f[6:15]) for f in scene] == [[9, 0, 19, 0, 30, 127, 60, 255, 255]]
+    assert [list(f[5:7]) for f in devices.frames(name) if f[0] == 0x5A and f[5] == 5][-1] == [5, 3]  # auto on
+    await hass.config_entries.async_unload(entry.entry_id)
+
+
 async def test_wrgb2_pro_rgbw(hass: HomeAssistant, devices: FakeDevices):
     name = "DYWPRO600011"
     entry = await setup(hass, name)

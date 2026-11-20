@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **Lite controllers keep their weekday schedule after a power cut:** A II, Z Light TINY (DYZSD), Terrarium Egg and Commander 1 only run their schedule after a power cut when it is written again. This already happened for a schedule set with `chihiros.set_auto_curve`; a schedule set with `chihiros.set_weekday_schedule` is now written again too.
+
 ## 26.11.2 – 05.11.2026
 
 - **Acclimatization duration says "weeks":** the setting showed only a bare "w" as unit. Home Assistant always shows units as English symbols, so the name now reads "Acclimatization duration (weeks)" (German: "Eingewöhnung Dauer (Wochen)") and the unit is gone. The entity ID of existing installations stays the same.
