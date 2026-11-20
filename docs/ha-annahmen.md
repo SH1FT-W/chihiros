@@ -41,5 +41,8 @@ Integrationen, deren Entitäten oder Attribute dieses Repo liest (Domain, was ge
 Befehl, der die Annahmen gegen eine bestimmte HA-Version prüft (`HA_VERSION=beta` o. ä.), oder „keiner“:
 
 ```sh
-keiner (Pakete in requirements_test.txt anheben, dann .venv/bin/python -m pytest -q -p no:logging)
+gh workflow run pruefung.yml   # Job „Tests gegen neueste HA (Frühwarnung)“: neueste HA inkl. Beta über pytest-homeassistant
 ```
+
+Lokal dasselbe: die Schritte dieses Jobs aus `.github/workflows/pruefung.yml` in einem eigenen venv
+(zuletzt am 20.11.2026 gegen HA 2026.11.2 grün, nur Warnungen aus aiohttp/backoff).
