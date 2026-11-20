@@ -173,7 +173,7 @@ If the device is not reachable or an input does not fit (for example channel 5 o
 ## Good to know
 
 - **Doses are never repeated.** If the connection breaks during a dose, an error appears: check the counter to see whether it dosed.
-- **The lamp does not report its colour.** Home Assistant shows its last command, in auto mode the stored schedule. After a change in the app or with the remote, it shows its own state until it sends something again. After a power cut it sets the clock and, in manual mode, the colour again.
+- **The lamp does not report its colour.** Home Assistant shows its last command, in auto mode the stored schedule. After a change in the app or with the remote, it shows its own state until it sends something again. After a power cut it sets the clock and, in manual mode, the colour again; lite controllers in auto mode get their schedule written again.
 - **One connection at a time, kind to proxies.** Commands to the same device wait for each other, one operation takes at most 40 seconds, and the connection closes after 15 seconds idle. Home Assistant's start is never blocked; the first contact runs in the background.
 - **Reachability** comes from the Bluetooth advertisements: if no proxy sees the device, its entities become unavailable.
 - **Older lamps** (Commander X, Commander 1, Commander 4 `DYLED`, WRGB II `DYWRGB`, Terrarium Egg, Z Light TINY) store schedule points in 30-minute steps, like the app. Checking a written schedule works only on the newer SeaLed family, up to 8 points and on the first channel.
